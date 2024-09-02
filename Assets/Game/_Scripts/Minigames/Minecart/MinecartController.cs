@@ -13,6 +13,7 @@ public class MinecartController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] float speed = 3f;
     [SerializeField] float breakPower = 0.5f;
+    private bool finishedTrack = false;
 
     //contador de tempo
     private bool countingdown = false;
@@ -22,17 +23,7 @@ public class MinecartController : MonoBehaviour
     void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    public void Move(){
-
-        rb.velocity = Vector2.up * speed;
-
-        if(!currentCart) {
-            currentCart = true;
-            canBreak = true;
-        }
-    }
-
+    //
     void Update() {
         
         if(currentCart){
@@ -43,8 +34,17 @@ public class MinecartController : MonoBehaviour
             }
         }
     }
+    //
+    public void Move(){
 
+        rb.velocity = Vector2.up * speed;
 
+        if(!currentCart) {
+            currentCart = true;
+            canBreak = true;
+        }
+    }
+    //
     void CheckInput(){
 
         if(!movementStarted){
@@ -64,7 +64,7 @@ public class MinecartController : MonoBehaviour
            Break();
         }
     }
-
+    //
     void Break(){
 
        rb.velocity = new(0f, rb.velocity.y - breakPower);
@@ -76,7 +76,7 @@ public class MinecartController : MonoBehaviour
             StartCoroutine(Countdown());
         }
     }
-
+    //
     IEnumerator Countdown(){
 
         countingdown = true;
@@ -90,5 +90,17 @@ public class MinecartController : MonoBehaviour
         canBreak = true;
 
         countingdown = false;
+    }
+    //
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.CompareTag("Destiny")){
+            rb.velocity = Vector2.zero;
+            currentCart = false;
+            finishedTrack = true;
+        }
+    }
+    //
+    public bool IsTrackComplete(){
+        return finishedTrack;
     }
 }
