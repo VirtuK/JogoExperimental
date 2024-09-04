@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
+using UnityEngine.SceneManagement;
 
 public class MinecartGameManager : MonoBehaviour
 {
@@ -11,6 +14,9 @@ public class MinecartGameManager : MonoBehaviour
     //timer
     [SerializeField] private MinigameTimer timer;
 
+    //UI
+    public TextMeshProUGUI result;
+
     //----------------------------\\
     void Start(){
         
@@ -20,6 +26,10 @@ public class MinecartGameManager : MonoBehaviour
     //
     void Update(){
 
+        if(Input.GetKeyDown(KeyCode.R)){
+            SceneManager.LoadScene("Minecart");
+        }
+
         if(cartScript != null){
 
             if(cartScript.IsTrackComplete()) {
@@ -28,18 +38,18 @@ public class MinecartGameManager : MonoBehaviour
 
                 if(cartsRemaining <=0){
                     timer.StopTimer();
-                    print("Ganhou :)");
+                    result.text = "GANHASTE :>";
                 }
                 else {
                     Sort();
                 }
             }
-        }
 
-        if(timer.TimeUp()){
+            if(timer.TimeUp() || cartScript.Dynamite()){
 
-            print("Perdeu :/");
-            Time.timeScale = 0f;
+                result.text = "PERDESTE :/";
+                Time.timeScale = 0f;
+            }
         }
     }
     //sorteia o próximo carrinho

@@ -7,6 +7,8 @@ public class MinecartController : MonoBehaviour
     private bool currentCart = false;
     private bool finishedTrack = false;
 
+    private bool dynamite = false;
+
     //movimento
     private MinecartMovement movementScript;
     private Rigidbody2D rb;
@@ -17,6 +19,7 @@ public class MinecartController : MonoBehaviour
 
     [Header("Freio")]
     [SerializeField] private float cooldown = 5f;
+    private Coroutine cooldownCoroutine; 
     private bool canBreak = false;
 
     //-------------------------------------------\\
@@ -28,7 +31,7 @@ public class MinecartController : MonoBehaviour
     }
     //
     void Update(){
-
+        
         if(currentCart){
 
             if(canBreak){
@@ -48,6 +51,10 @@ public class MinecartController : MonoBehaviour
         return finishedTrack;
     }
     //
+    public bool Dynamite(){
+        return dynamite;
+    }
+    //
     void StopMovement(){
         rb.velocity = Vector2.zero;
         movementScript.enabled = false;
@@ -56,8 +63,8 @@ public class MinecartController : MonoBehaviour
     void CheckPumpInput(){
 
         if(!movementStarted){
+
             if(pump.GetDistance() >= 30f) movementStarted = true;
-            
         }
         else{
             if(pump.GetDistance() <= 10f){
@@ -76,32 +83,40 @@ public class MinecartController : MonoBehaviour
     void Break(){
 
         if(movementScript.SlowDown()){
-            StartCoroutine(Cooldown());
+            StopMovement();
+            canBreak = false;
         }
+
+        cooldownCoroutine ??= StartCoroutine(Cooldown());
     }
     //
     IEnumerator Cooldown(){
-
-        StopMovement();
-        canBreak = false;
 
         yield return new WaitForSeconds(cooldown);
 
         movementScript.enabled = true;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
+        movementScript.SetToMaxSpeed();
         canBreak = true;
+        cooldownCoroutine = null;
     }
     //
     
     private void OnTriggerEnter2D(Collider2D other) {
 
-        if(other.CompareTag("Destiny")){
+        if(other.CompareTag("Objective")){
 
             StopMovement();
             currentCart = false;
             finishedTrack = true;
+        }
+
+        if(other.CompareTag("Dynamite")){
+            StopMovement();
+            movementScript.enabled = false;
+            dynamite = true;
         }
     }
 }

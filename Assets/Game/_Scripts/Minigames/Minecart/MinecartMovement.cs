@@ -6,7 +6,7 @@ public class MinecartMovement : MonoBehaviour
     [Header("Velocidade do carrinho")]
     [SerializeField] private float maxSpeed = 2f;
     private float speed;
-    [SerializeField] private float breakPower = 0.5f;
+    [SerializeField] private float breakPower = 0.6f;
     Rigidbody2D rb;
 
     //curva
@@ -41,10 +41,14 @@ public class MinecartMovement : MonoBehaviour
 
     }
     //
+    public void SetToMaxSpeed(){
+        speed = maxSpeed;
+    }
+    //
     public bool SlowDown(){
 
-        if(!curve) speed *= 0.6f;
-        return speed <= 0.5f;
+        if(!curve) speed *= breakPower;
+        return speed <= 0.1f;
     }
     //
     Vector3 CubicLerp(Vector3 a, Vector3 b, Vector3 c, float t){
@@ -73,6 +77,7 @@ public class MinecartMovement : MonoBehaviour
                 curvePoints[i] = other.transform.GetChild(i).transform.position;
             }
             curve = true;
+            speed = maxSpeed;
             interpolation = 0f;
         }
     }

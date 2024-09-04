@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Destiny
   - RailwayCurve
+  - Dynamite
+  - Objective
   layers:
   - Default
   - TransparentFX
