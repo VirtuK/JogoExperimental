@@ -3,55 +3,63 @@ using UnityEngine;
 
 public class MinecartController : MonoBehaviour
 {
-    //controle bomba de ar
-    [SerializeField] Pump_SensorDistance pump;
-    private bool movementStarted = false;
+    //gerenciamento de trajeto
     private bool currentCart = false;
-    private bool canBreak = false;
-
-    //movimento do carrinho;
-    private Rigidbody2D rb;
-    [SerializeField] float speed = 3f;
-    [SerializeField] float breakPower = 0.5f;
     private bool finishedTrack = false;
 
-    //contador de tempo
-    private bool countingdown = false;
+    //movimento
+    private MinecartMovement movementScript;
+    private Rigidbody2D rb;
 
-    //----------------------------\\
+    //controle da bomba de ar
+    [SerializeField] Pump_SensorDistance pump;
+    private bool movementStarted = false;
 
-    void Start() {
+    [Header("Freio")]
+    [SerializeField] private float cooldown = 5f;
+    private bool canBreak = false;
+
+    //-------------------------------------------\\
+
+    void Start(){
+        movementScript = GetComponent<MinecartMovement>();
+        movementScript.enabled = false;
         rb = GetComponent<Rigidbody2D>();
     }
     //
-    void Update() {
-        
+    void Update(){
+
         if(currentCart){
 
             if(canBreak){
-            
-                 if(!countingdown) CheckInput();
+                CheckPumpInput();
             }
         }
     }
     //
-    public void Move(){
 
-        rb.velocity = Vector2.up * speed;
-
-        if(!currentCart) {
-            currentCart = true;
-            canBreak = true;
-        }
+    public void SetCurrent(){
+        currentCart = true;
+        canBreak = true;
+        movementScript.enabled = true;
     }
     //
-    void CheckInput(){
+    public bool IsTrackComplete(){
+        return finishedTrack;
+    }
+    //
+    void StopMovement(){
+        rb.velocity = Vector2.zero;
+        movementScript.enabled = false;
+    }
+    //
+    void CheckPumpInput(){
 
         if(!movementStarted){
             if(pump.GetDistance() >= 30f) movementStarted = true;
+            
         }
         else{
-
             if(pump.GetDistance() <= 10f){
 
                 Break();
@@ -67,40 +75,33 @@ public class MinecartController : MonoBehaviour
     //
     void Break(){
 
-       rb.velocity = new(0f, rb.velocity.y - breakPower);
-
-        if(rb.velocity.y <= 0f){
-
-            rb.velocity = Vector2.zero;
-            canBreak = false;
-            StartCoroutine(Countdown());
+        if(movementScript.SlowDown()){
+            StartCoroutine(Cooldown());
         }
     }
     //
-    IEnumerator Countdown(){
+    IEnumerator Cooldown(){
 
-        countingdown = true;
+        StopMovement();
+        canBreak = false;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(cooldown);
 
-        Move();
+        movementScript.enabled = true;
 
         yield return new WaitForSeconds(2f);
 
         canBreak = true;
-
-        countingdown = false;
     }
     //
-    void OnTriggerEnter2D(Collider2D other) {
+    
+    private void OnTriggerEnter2D(Collider2D other) {
+
         if(other.CompareTag("Destiny")){
-            rb.velocity = Vector2.zero;
+
+            StopMovement();
             currentCart = false;
             finishedTrack = true;
         }
-    }
-    //
-    public bool IsTrackComplete(){
-        return finishedTrack;
     }
 }
