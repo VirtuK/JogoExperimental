@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -19,26 +20,61 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            checkPosition();
-            this.transform.position = new Vector3(grid.gridPosition[actualPositionX][actualPositionY + 1].x, grid.gridPosition[actualPositionX][actualPositionY + 1].y, -0.3f);
-            
+            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY + 1];
+            if (newPos.name != "Wall")
+            {
+                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
+                checkPosition();
+                if (newPos.name == "Finish Point")
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+           
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            checkPosition();
-            this.transform.position = new Vector3(grid.gridPosition[actualPositionX][actualPositionY - 1].x, grid.gridPosition[actualPositionX][actualPositionY - 1].y, -0.3f);
-            
+            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY - 1];
+            if (newPos.name != "Wall")
+            {
+                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
+                checkPosition();
+                if (newPos.name == "Finish Point")
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+           
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            checkPosition();
-            this.transform.position = new Vector3(grid.gridPosition[actualPositionX + 1][actualPositionY].x, grid.gridPosition[actualPositionX + 1][actualPositionY].y, -0.3f);
+            GameObject newPos = grid.gridPosition[actualPositionX + 1][actualPositionY];
+            if (newPos.name != "Wall")
+            {
+                
+                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
+                checkPosition();
+                if (newPos.name == "Finish Point")
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
             
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            checkPosition();
-            this.transform.position = new Vector3(grid.gridPosition[actualPositionX - 1][actualPositionY].x, grid.gridPosition[actualPositionX - 1][actualPositionY].y, -0.3f);
+            GameObject newPos = grid.gridPosition[actualPositionX - 1][actualPositionY];
+            if (newPos.name != "Wall")
+            {
+                
+                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
+                checkPosition();
+                if (newPos.name == "Finish Point")
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+            
             
         }
     }
@@ -49,7 +85,7 @@ public class Player : MonoBehaviour
         {
             for (int j = 0; j < grid.gridPosition[i].Length; j++)
             {
-                if (grid.gridPosition[i][j].x == this.transform.position.x && grid.gridPosition[i][j].y == this.transform.position.y)
+                if (grid.gridPosition[i][j].transform.position.x == this.transform.position.x && grid.gridPosition[i][j].transform.position.y == this.transform.position.y)
                 {
                     actualPositionX = i;
                     actualPositionY = j;
