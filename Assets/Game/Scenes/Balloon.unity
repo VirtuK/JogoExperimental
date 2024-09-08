@@ -401,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 838648854046859544, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 80.8
+      value: 80.79999
       objectReference: {fileID: 0}
     - target: {fileID: 838648854046859544, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -791,6 +791,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 838648854046859544, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
   m_PrefabInstance: {fileID: 728328790}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1578858468 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3451957280430776964, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
+  m_PrefabInstance: {fileID: 728328790}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4729545b22574b743af877f0d4eac2d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1765103868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,12 +980,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c87aa7c73daa489275fcda021590e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holePrefab: {fileID: 1750110841320757899, guid: b2300a0797ada2045b40888bf600c58a, type: 3}
+  ripPrefab: {fileID: 2000068059848180953, guid: 4253218ac86ec8747afa5439f9588546, type: 3}
   balloon: {fileID: 1941352466}
-  initialTimer: 3
-  holeIntervalMax: 3
-  holeIntervalMin: 3
-  nMaxHole: 30
+  holes: []
+  rips: []
+  initialTimer: 0
+  holeIntervalMax: 0
+  holeIntervalMin: 0
+  nMaxHole: 5
 --- !u!114 &1800156670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,10 +1000,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd83cbd5c4754464bbafbd32f6a15509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  started: 0
+  timer: {fileID: 1578858468}
   balloon: {fileID: 1941352467}
-  airInside: 6.444138
-  airLoss: 0.27
-  airMin: 4.82
+  airInside: 0
+  airLoss: 0.3
+  airMin: 4
+  airMax: 6.444138
+  sensor: {fileID: 684050966}
+  pumpAir: 0.9
+  airToStart: 4.62667
   lineRendererLeft: {fileID: 1187022510}
   lineRendererRight: {fileID: 1973584128}
   AnchorLeft: {fileID: 2128774560}
@@ -1022,7 +1041,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.39, z: 0}
-  m_LocalScale: {x: 6.444138, y: 6.444138, z: 6.444138}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1275842470}
@@ -1115,8 +1134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 120
-  tape: {fileID: 2000068059848180953, guid: 4253218ac86ec8747afa5439f9588546, type: 3}
-  holeScript: {fileID: 1800156669}
+  holePrefab: {fileID: 1750110841320757899, guid: b2300a0797ada2045b40888bf600c58a, type: 3}
+  ripScript: {fileID: 1800156669}
 --- !u!114 &1969122688
 MonoBehaviour:
   m_ObjectHideFlags: 0

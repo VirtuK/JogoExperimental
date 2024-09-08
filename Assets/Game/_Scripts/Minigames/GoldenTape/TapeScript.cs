@@ -2,33 +2,24 @@ using UnityEngine;
 
 public class TapeScript : MonoBehaviour
 {
-    private float time = 0f;
-
-    [Range(0, 100)]
-    [SerializeField]
-    private float speed = 1f;
-
-    private float colorAlpha;
-
-    private SpriteRenderer sprite;
+    [SerializeField] private RipGenerator generatorScript;
+    [SerializeField] private GameObject balloon;
+    private bool stay = false;
 
     private void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
+        generatorScript = FindObjectOfType<RipGenerator>();
+        balloon = generatorScript.transform.GetChild(0).gameObject;
+
     }
 
-    private void Update()
+
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        time += speed * Time.deltaTime;
-        colorAlpha = Mathf.Lerp(1f, 0f, time);
-
-       sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, colorAlpha);
-
-        if(colorAlpha == 0f)
+        if (collision.CompareTag("Rip") && (stay == false))
         {
-            Destroy(gameObject);
+
         }
     }
-
-
 }

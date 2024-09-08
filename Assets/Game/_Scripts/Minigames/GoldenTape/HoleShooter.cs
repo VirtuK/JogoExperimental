@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TapeShooter : MonoBehaviour
+public class HoleShooter : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 input;
     [SerializeField] private float speed;
-    [SerializeField] private GameObject tape;
-    [SerializeField] private HoleGenerator holeScript;
-    private GameObject hole;
+    [SerializeField] private GameObject holePrefab;
+    [SerializeField] private RipGenerator ripScript;
+    private GameObject ripObj;
+    private GameObject holeObj;
 
     private bool colliding = false;
 
@@ -30,9 +31,10 @@ public class TapeShooter : MonoBehaviour
     {
         if(context.performed && colliding)
         {
-            Instantiate(tape, hole.transform.position, Quaternion.identity);
-            holeScript.RemoveHole(hole);
-            Destroy(hole);
+            holeObj = Instantiate(holePrefab, ripObj.transform.position, Quaternion.identity);
+            ripScript.RemoveRip(ripObj);
+            ripScript.holes.Add(holeObj);
+            Destroy(ripObj);
         }
 
 
@@ -46,16 +48,16 @@ public class TapeShooter : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Hole"))
+        if (collision.CompareTag("Rip"))
         {
             colliding = true;
-            hole = collision.gameObject;
+            ripObj = collision.gameObject;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Hole"))
+        if (collision.CompareTag("Rip"))
         {
             colliding = false;
         }
