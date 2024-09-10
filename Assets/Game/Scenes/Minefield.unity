@@ -417,9 +417,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307daf00b895d3242baf81c556dc0ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombCount: 5
+  bombCount: 4
   tile: {fileID: 5114552023126802873, guid: d75cf39ddc2ba974cb94cd9a9ba89a19, type: 3}
   pathPosition: []
+  walkPosition: []
   bombList: []
   levelNumbers: 6
   cam: {fileID: 209412904}
@@ -535,6 +536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 381688271}
+  lever1: 0
+  lever2: 0
 --- !u!4 &1070692787
 Transform:
   m_ObjectHideFlags: 0

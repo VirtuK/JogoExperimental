@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public Grid grid;
     int actualPositionX;
     int actualPositionY;
+    int positionIndex = 0;
     void Start()
     {
         
@@ -18,9 +19,14 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY + 1];
+            positionIndex++;
+            transform.position = grid.walkPosition[positionIndex];
+            transform.position = new Vector3(transform.position.x, transform.position.y, -0.3f);
+            checkPosition();
+            print("aaaaaaaa");
+            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY];
             if (newPos.name != "Wall")
             {
                 this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
@@ -30,52 +36,6 @@ public class Player : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
-           
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY - 1];
-            if (newPos.name != "Wall")
-            {
-                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
-                checkPosition();
-                if (newPos.name == "Finish Point")
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
-            }
-           
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            GameObject newPos = grid.gridPosition[actualPositionX + 1][actualPositionY];
-            if (newPos.name != "Wall")
-            {
-                
-                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
-                checkPosition();
-                if (newPos.name == "Finish Point")
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
-            }
-            
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameObject newPos = grid.gridPosition[actualPositionX - 1][actualPositionY];
-            if (newPos.name != "Wall")
-            {
-                
-                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
-                checkPosition();
-                if (newPos.name == "Finish Point")
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
-            }
-            
-            
         }
     }
 

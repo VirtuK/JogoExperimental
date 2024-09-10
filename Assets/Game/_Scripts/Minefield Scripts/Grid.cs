@@ -13,6 +13,7 @@ public class Grid : MonoBehaviour
     public GameObject tile;
     public List<GameObject[]> gridPosition = new List<GameObject[]>();
     public List<Vector3> pathPosition = new List<Vector3>();
+    public List<Vector3> walkPosition = new List<Vector3>();
     public List<GameObject> bombList = new List<GameObject>();
     public int levelNumbers = 0;
     public Transform cam;
@@ -22,13 +23,15 @@ public class Grid : MonoBehaviour
     public bool startDecided = false;
     public GameObject bombPrefab;
     public GameObject bombs;
-    List<Vector2> level0 = new List<Vector2>();
+    List<Vector2> level1 = new List<Vector2>();
+    List<Vector2> level2 = new List<Vector2>();
+    List<Vector2[]> levels = new List<Vector2[]>();
     // Start is called before the first frame update
     void Start()
     {
         
         
-        level0.AddRange(new List<Vector2> { new Vector2(1, 15), new Vector2(1,14), new Vector2(1,13),
+        level1.AddRange(new List<Vector2> { new Vector2(1, 15), new Vector2(1,14), new Vector2(1,13),
         new Vector2(1,12), new Vector2(2,12), new Vector2(3,12), new Vector2(4,12),
         new Vector2(5,12), new Vector2(6,12), new Vector2(6,11), new Vector2(6,10),
         new Vector2(5,10), new Vector2(5,9), new Vector2(5,8), new Vector2(5,7),
@@ -44,6 +47,11 @@ public class Grid : MonoBehaviour
         new Vector2(12,8), new Vector2(12,7), new Vector2(13,7), new Vector2(13,6),
         new Vector2(13,5), new Vector2(13,4), new Vector2(14,4), new Vector2(14,3),
         new Vector2(14,2), new Vector2(14,1), new Vector2(14,0)});
+
+        level2.Add(new Vector2(12,8));
+        print(level1.Count + "aoba");
+        levels.Add(level1.ToArray());
+        levels.Add(level2.ToArray());
 
         for (int i = 0; i <= width; i++)
         {
@@ -87,30 +95,30 @@ public class Grid : MonoBehaviour
     void setPath()
     {
         int rand = 0;
-        switch (rand)
-        {
-            case 0:
-                for (int i = 0; i < level0.Count; i++)
+                for (int i = 0; i < levels[rand].Length; i++)
                 {
-                    int x = (int)level0[i].x;
-                    int y = (int)level0[i].y;
+                    int x = (int)levels[rand][i].x;
+                    int y = (int)levels[rand][i].y;
                     if (i == 0)
                     {
                         setStart(gridPosition[x][y]);
                     }
-                    else if (i == level0.Count - 1)
+                    else if (i == levels[rand].Length - 1)
                     {
                         setFinishPoint(gridPosition[x][y]);
+                        
                     }
                     else
                     {
                         gridPosition[x][y].name = "Path";
                         gridPosition[x][y].GetComponent<SpriteRenderer>().color = Color.white;
+                      
                     }
                     pathPosition.Add(gridPosition[x][y].transform.position);
+                    walkPosition.Add(gridPosition[x][y].transform.position);
                 }
-                break;
-        }
+                
+
         setPlayer();
         setBombs();
     }
