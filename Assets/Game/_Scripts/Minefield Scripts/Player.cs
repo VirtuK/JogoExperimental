@@ -10,32 +10,36 @@ public class Player : MonoBehaviour
     int actualPositionX;
     int actualPositionY;
     int positionIndex = 0;
+
+    [SerializeField] private Pump_SensorDistance sensor;
+    bool movementStarted;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    void CheckPumpInput()
+    {
+        if (!movementStarted)
+        {
+            if(sensor.GetDistance() >= 30) movementStarted = true;
+        }
+        else
+        {
+            if(sensor.GetDistance() <= 10)
+            {
+                movePlayer();
+                movementStarted = false;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            positionIndex++;
-            transform.position = grid.walkPosition[positionIndex];
-            transform.position = new Vector3(transform.position.x, transform.position.y, -0.3f);
-            checkPosition();
-            print("aaaaaaaa");
-            GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY];
-            if (newPos.name != "Wall")
-            {
-                this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
-                checkPosition();
-                if (newPos.name == "Finish Point")
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
-            }
+            movePlayer();
         }
     }
 
@@ -55,5 +59,24 @@ public class Player : MonoBehaviour
             }
         }
         
+    }
+
+    public void movePlayer()
+    {
+        positionIndex++;
+        transform.position = grid.walkPosition[positionIndex];
+        transform.position = new Vector3(transform.position.x, transform.position.y, -0.3f);
+        checkPosition();
+        print("aaaaaaaa");
+        GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY];
+        if (newPos.name != "Wall")
+        {
+            this.transform.position = new Vector3(newPos.transform.position.x, newPos.transform.position.y, -0.3f);
+            checkPosition();
+            if (newPos.name == "Finish Point")
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
     }
 }
