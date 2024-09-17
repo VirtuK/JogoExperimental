@@ -22,8 +22,10 @@ public class BalloonAir : MonoBehaviour
     [SerializeField] private LineRenderer lineRendererLeft;
     [SerializeField] private LineRenderer lineRendererRight;
 
-    [SerializeField] private Transform AnchorLeft;
-    [SerializeField] private Transform AnchorRight;
+    [SerializeField] private Transform AnchorTopLeft;
+    [SerializeField] private Transform AnchorTopRight;
+    [SerializeField] private Transform AnchorBottomLeft;
+    [SerializeField] private Transform AnchorBottomRight;
 
     [Header("Rip generator")]
     private TargetGenerator targetScript;
@@ -71,8 +73,11 @@ public class BalloonAir : MonoBehaviour
 
     private void Update()
     {
-        lineRendererLeft.SetPosition(1, AnchorLeft.position);
-        lineRendererRight.SetPosition(1, AnchorRight.position);
+        lineRendererLeft.SetPosition(0, AnchorBottomLeft.position);
+        lineRendererRight.SetPosition(0, AnchorBottomRight.position);
+
+        lineRendererLeft.SetPosition(1, AnchorTopLeft.position);
+        lineRendererRight.SetPosition(1, AnchorTopRight.position);
 
         if (playing)
         {
