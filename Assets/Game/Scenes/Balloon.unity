@@ -985,8 +985,8 @@ MonoBehaviour:
   holes: []
   rips: []
   initialTimer: 0
-  holeIntervalMax: 0
-  holeIntervalMin: 0
+  holeIntervalMax: 3
+  holeIntervalMin: 1
   nMaxHole: 5
 --- !u!114 &1800156670
 MonoBehaviour:

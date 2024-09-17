@@ -9,7 +9,7 @@ public class BalloonAir : MonoBehaviour
     [SerializeField] private MinigameTimer timer;
     [SerializeField] private Transform balloon;
     [Header("Air controller")]
-    [SerializeField]private float airInside;
+    [SerializeField] private float airInside;
     [Range(0, 100)][SerializeField] private float airLoss;
     [Range(0, 100)][SerializeField] private float airMin;
     [Range(0, 100)][SerializeField] private float airMax;
@@ -58,7 +58,7 @@ public class BalloonAir : MonoBehaviour
         }
 
         //teste
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             AddAir();
         }
@@ -85,7 +85,7 @@ public class BalloonAir : MonoBehaviour
             {
                 balloon.localScale = Vector3.Lerp(balloon.localScale, new Vector3(airInside, airInside, airInside), airLoss);
 
-                if(airInside > airToStart && !started)
+                if (airInside > airToStart && !started)
                 {
                     started = true;
                     timer.enabled = true;
