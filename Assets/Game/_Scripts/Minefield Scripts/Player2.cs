@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player2 : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Player2 : MonoBehaviour
     public int lever1;
     public int lever2;
     public List<int[]> bombCodes = new List<int[]>();
+
+    public Image lever1Object;
+    public Image lever2Object;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,18 +52,22 @@ public class Player2 : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W))
         {
             lever1 = 1;
+            lever1Object.color = Color.white;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             lever1 = 0;
+            lever1Object.color = Color.black;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             lever2 = 1;
+            lever2Object.color = Color.white;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
            lever2 = 0;
+           lever2Object.color = Color.black;
         }
         if (Input.GetKeyDown(KeyCode.E)){
             for(int i = 0; i < bombCodes.Count; i++)

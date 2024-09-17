@@ -76,7 +76,7 @@ public class Grid : MonoBehaviour
         new Vector2(4,11), new Vector2(5,11), new Vector2(5,10), new Vector2(5,9), new Vector2(5,8), new Vector2(5,7), new Vector2(6,7),
         new Vector2(7,7), new Vector2(8,7), new Vector2(9,7), new Vector2(10,7), new Vector2(11,7), new Vector2(11,8), new Vector2(11,9),
         new Vector2(12,9), new Vector2(12,10), new Vector2(12,11), new Vector2(12,12), new Vector2(13,12), new Vector2(14,12),
-        new Vector2(14,11), new Vector2(14,10), new Vector2(14,9), new Vector2(15,9), new Vector2(16,9), new Vector2(17,9)});
+        new Vector2(14,11), new Vector2(14,10), new Vector2(14,9), new Vector2(15,9), new Vector2(16,9)});
 
         level4.AddRange(new List<Vector2> { new Vector2(5,15), new Vector2(5,14), new Vector2(5,13), new Vector2(4,13), new Vector2(3,13),
         new Vector2(3,14),new Vector2(2,14),new Vector2(1,14),new Vector2(1,13),new Vector2(1,12),new Vector2(1,11),new Vector2(1,10),

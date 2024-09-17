@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        CheckPumpInput();
     }
 
     void CheckPumpInput()
