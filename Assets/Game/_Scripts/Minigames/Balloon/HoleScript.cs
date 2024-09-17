@@ -1,47 +1,40 @@
+using System.Collections;
 using UnityEngine;
 
 public class HoleScript : MonoBehaviour
 {
-    private float time = 0f;
 
-    [Range(0, 100)]
-    [SerializeField]
-    private float speed = 3f;
-
-    private float colorAlpha;
-
+    [SerializeField][Range(0, 100)] private float speed;
     private SpriteRenderer sprite;
-
-    private RipGenerator ripScript;
+    private TargetGenerator targetScript;
 
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        targetScript = FindObjectOfType<TargetGenerator>();
+
+        StartCoroutine(FadeOut());
     }
 
-    private void Update()
+    IEnumerator FadeOut()
     {
-        time += speed * Time.deltaTime;
-        colorAlpha = Mathf.Lerp(1f, 0f, time);
+        float elapsedTime = 0f;
+        float colorAlpha = 1f;
 
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, colorAlpha);
+        yield return new WaitForSeconds(1f);
 
-        if (colorAlpha == 0f)
+        while (colorAlpha > 0f)
         {
-            Destroy(gameObject);
-        }
-    }
+            elapsedTime += speed * Time.deltaTime;
+            colorAlpha = Mathf.Lerp(1f, 0f, elapsedTime);
 
-    public void RemoveHole(GameObject hole)
-    {
-        foreach (GameObject obj in ripScript.holes)
-        {
-            if (obj.transform.position == hole.transform.position)
-            {
-                ripScript.holes.Remove(obj);
-                return;
-            }
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, colorAlpha);
+
+            yield return null;
         }
 
+        targetScript.holes.Remove(gameObject);
+
+        Destroy(gameObject);
     }
 }

@@ -8,8 +8,7 @@ TagManager:
   - Dynamite
   - Objective
   - Hole
-  - Rip
-  - Tape
+  - Target
   layers:
   - Default
   - TransparentFX

@@ -415,6 +415,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3451957280430776964, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
+      propertyPath: maxTime
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7137928363647439619, guid: 0e228d0d6d38c5946a5be0a8eec18faa, type: 3}
       propertyPath: m_Name
       value: Timer
@@ -980,10 +984,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c87aa7c73daa489275fcda021590e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ripPrefab: {fileID: 2000068059848180953, guid: 4253218ac86ec8747afa5439f9588546, type: 3}
+  targetPrefab: {fileID: 2000068059848180953, guid: 4253218ac86ec8747afa5439f9588546, type: 3}
   balloon: {fileID: 1941352466}
+  balloonScript: {fileID: 1800156670}
   holes: []
-  rips: []
+  targets: []
   initialTimer: 0
   holeIntervalMax: 3
   holeIntervalMin: 1
@@ -1000,6 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd83cbd5c4754464bbafbd32f6a15509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playing: 1
   started: 0
   timer: {fileID: 1578858468}
   balloon: {fileID: 1941352467}
@@ -1133,9 +1139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16dca15a7e476048a2f8e39eb0db3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 120
+  speed: 150
   holePrefab: {fileID: 1750110841320757899, guid: b2300a0797ada2045b40888bf600c58a, type: 3}
-  ripScript: {fileID: 1800156669}
+  generatorScript: {fileID: 1800156669}
+  balloonScript: {fileID: 1800156670}
 --- !u!114 &1969122688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1164,23 +1171,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1969122687}
-        m_TargetAssemblyTypeName: TapeShooter, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c7eab7e3-8eaa-45c4-9562-1c3dd0aaca9c
-    m_ActionName: Player2/Move[/Keyboard/w,/Keyboard/a,/Keyboard/s,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1969122687}
-        m_TargetAssemblyTypeName: TapeShooter, Assembly-CSharp
+        m_TargetAssemblyTypeName: HoleShooter, Assembly-CSharp
         m_MethodName: OnAction
         m_Mode: 0
         m_Arguments:
@@ -1193,6 +1184,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 715c9b16-1cd7-4731-808b-a6969b983b13
     m_ActionName: Player2/Action[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1969122687}
+        m_TargetAssemblyTypeName: HoleShooter, Assembly-CSharp
+        m_MethodName: OnLeftStick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 15c261f7-accb-4d28-96f0-b3cff455b2be
+    m_ActionName: Player2/LeftStick[/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1969122687}
+        m_TargetAssemblyTypeName: HoleShooter, Assembly-CSharp
+        m_MethodName: OnRightStick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6b48ce84-9e39-47a5-a5dd-9afc384a389c
+    m_ActionName: Player2/RightStick[/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player2
@@ -1233,8 +1256,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.21133333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1311,8 +1334,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.60748005, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9c7a719ce8944884da0bc797b505d240, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1332,7 +1355,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

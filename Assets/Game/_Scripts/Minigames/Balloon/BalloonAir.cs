@@ -1,9 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BalloonAir : MonoBehaviour
 {
-    private bool playing = true;
+    public bool playing = true;
     public bool started = false;
 
     [SerializeField] private MinigameTimer timer;
@@ -27,12 +26,12 @@ public class BalloonAir : MonoBehaviour
     [SerializeField] private Transform AnchorRight;
 
     [Header("Rip generator")]
-    private RipGenerator ripScript;
+    private TargetGenerator targetScript;
     private bool movementStarted;
 
     private void Start()
     {
-        ripScript = GetComponent<RipGenerator>();
+        targetScript = GetComponent<TargetGenerator>();
         timer.enabled = false;
         airInside = airMin;
 
@@ -78,7 +77,7 @@ public class BalloonAir : MonoBehaviour
         if (playing)
         {
             CheckPumpInput();
-            totalAirLoss = ripScript.holes.Count * airLoss * Time.deltaTime;
+            totalAirLoss = targetScript.holes.Count * airLoss * Time.deltaTime;
             airInside -= totalAirLoss;
 
             if (airInside > airMin && airInside < airMax)
@@ -98,9 +97,17 @@ public class BalloonAir : MonoBehaviour
                 print("Player 1 ganhou");
                 playing = false;
                 airInside = airMax;
+                timer.StopTimer();
             }
 
             else if (airInside < airMin && started)
+            {
+                print("Player 2 ganhou");
+                playing = false;
+                timer.StopTimer();
+            }
+
+            if (playing && timer.TimeUp())
             {
                 print("Player 2 ganhou");
                 playing = false;
