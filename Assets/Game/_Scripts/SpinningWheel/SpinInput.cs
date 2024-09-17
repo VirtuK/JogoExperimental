@@ -1,28 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using System.Collections;
 
-public class SpinButton : MonoBehaviour
+public class SpinInput : MonoBehaviour
 {
-    //-------------------------------------------\\
-    //barra UI do botão de girar
-    [SerializeField] private Image bar;
-    private float targetFillAmount = 0f;
-    [SerializeField] private float animDuration = 0.2f;
-
     //-------------------------------------------\\
     //input bomba de ar
     [SerializeField] Pump_SensorDistance pumpScript;
     private bool movementStarted;
 
     //-------------------------------------------\\
-    //verificar se jogador mandou girar
+    //verificar se jogador deu o ok
     private bool p1Ready = false;
     private bool p2Ready = false;
 
     //-------------------------------------------\\
     [SerializeField] Roulette rouletteScript;
+    [SerializeField] SpinButtonUI spinUI;
     private bool canSpin = true;
 
     //-------------------------------------------\\
@@ -35,6 +28,7 @@ public class SpinButton : MonoBehaviour
         {
             rouletteScript.Spin();
             canSpin = false;
+            StartCoroutine(spinUI.FadeOutText());
         }
     }
     //
@@ -42,12 +36,14 @@ public class SpinButton : MonoBehaviour
     {
         if (context.performed && !p2Ready)
         {
-            targetFillAmount += 0.5f;
+            StartCoroutine(spinUI.PressedAnim(2));
+
+            spinUI.AddFilling();
             p2Ready = true;
 
-            if (!p1Ready) bar.fillClockwise = false;
+            if (!p1Ready) spinUI.FillClockwise(false);
 
-            StartCoroutine(LerpBar(targetFillAmount, animDuration));
+            spinUI.FillBar();
         }
     }
     //
@@ -62,36 +58,25 @@ public class SpinButton : MonoBehaviour
         {
             if (pumpScript.GetDistance() <= 10f)
             {
-                targetFillAmount += 0.5f;
+                StartCoroutine(spinUI.PressedAnim(1));
+
+                spinUI.AddFilling();
                 movementStarted = false;
                 p1Ready = true;
 
-                StartCoroutine(LerpBar(targetFillAmount, animDuration));
+                spinUI.FillBar();
             }
         }
 
         //teste
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            targetFillAmount += 0.5f;
+            StartCoroutine(spinUI.PressedAnim(1));
+
+            spinUI.AddFilling();
             p1Ready = true;
 
-            StartCoroutine(LerpBar(targetFillAmount, animDuration));
+            spinUI.FillBar();
         }
-    }
-    //
-    IEnumerator LerpBar(float targetValue, float duration)
-    {
-        float elapsedTime = 0f;
-        float startValue = bar.fillAmount;
-
-        while (elapsedTime < duration)
-        {
-            bar.fillAmount = Mathf.Lerp(startValue, targetValue, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        bar.fillAmount = targetValue;
     }
 }
