@@ -13,6 +13,8 @@ public class Player2 : MonoBehaviour
 
     public Image lever1Object;
     public Image lever2Object;
+
+    int index;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,14 +76,14 @@ public class Player2 : MonoBehaviour
             {
                if(lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
                 {
-                    DetonateBomb(i);
+                    bombAnimation(i);
                     bombCodes.Remove(bombCodes[i]);
                 }
             }
         }
     }
 
-    void DetonateBomb(int bombIndex)
+    public void DetonateBomb(int bombIndex)
     {
         
             if (grid.bombList[bombIndex].transform.position.x == grid.player.transform.position.x && grid.bombList[bombIndex].transform.position.y == grid.player.transform.position.y)
@@ -91,5 +93,11 @@ public class Player2 : MonoBehaviour
             Destroy(grid.bombList[bombIndex]);
             grid.bombList.Remove(grid.bombList[bombIndex]);
      
+    }
+
+    void bombAnimation(int bombIndex)
+    {
+        grid.bombList[bombIndex].GetComponent<Animator>().SetBool("Explode", true);
+        index = bombIndex;
     }
 }

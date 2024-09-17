@@ -31,7 +31,6 @@ public class Grid : MonoBehaviour
     List<Vector2[]> levels = new List<Vector2[]>();
     public Sprite pathSprite;
     public Sprite wallSprite;
-    public Sprite bombSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -208,6 +207,7 @@ public class Grid : MonoBehaviour
             Vector3 bombPos = pathPosition[bombPosIndex];
             GameObject newBomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
             newBomb.transform.SetParent(bombs.transform);
+            
             bombList.Add(newBomb);
             pathPosition.Remove(pathPosition[bombPosIndex]);
         }
