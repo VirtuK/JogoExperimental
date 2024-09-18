@@ -32,7 +32,7 @@ public class Grid : MonoBehaviour
     public Sprite pathSprite;
     public Sprite wallSprite;
 
-    public List<Sprite> bombSprites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -209,7 +209,8 @@ public class Grid : MonoBehaviour
             Vector3 bombPos = pathPosition[bombPosIndex];
             GameObject newBomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
             newBomb.transform.SetParent(bombs.transform);
-            newBomb.GetComponent<SpriteRenderer>().sprite = bombSprites[i - 1];
+            newBomb.GetComponent<Animator>().SetInteger("bomb", i);
+            newBomb.transform.position = new Vector3(bombPos.x, bombPos.y, -0.2f);
             bombList.Add(newBomb);
             pathPosition.Remove(pathPosition[bombPosIndex]);
         }
