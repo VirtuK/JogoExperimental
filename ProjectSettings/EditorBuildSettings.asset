@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/Minecart.unity
     guid: 247edc11ca90d294790c2b7fc031fbb5
+  - enabled: 1
+    path: Assets/Game/Scenes/Minefield.unity
+    guid: e72d864bec300764483e6e059c05265d
   m_configObjects: {}

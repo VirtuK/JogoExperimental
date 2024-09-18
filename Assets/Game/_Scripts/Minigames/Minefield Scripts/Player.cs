@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
             checkPosition();
             if (newPos.name == "Finish Point")
             {
+                ScoreManager.instance.score_Player1++;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
