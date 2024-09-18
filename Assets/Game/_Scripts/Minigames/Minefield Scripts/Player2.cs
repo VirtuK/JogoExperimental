@@ -12,6 +12,7 @@ public class Player2 : MonoBehaviour
     public int lever1;
     public int lever2;
     public List<int[]> bombCodes = new List<int[]>();
+    public Player player;
 
     public Image lever1Object;
     public Image lever2Object;
@@ -27,6 +28,7 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<Player>();
         List<int> bombs = new List<int>();
         List<Vector2> codes = new List<Vector2>();
         bombs.AddRange(new List<int> {0,1,2,3});
@@ -169,12 +171,19 @@ public class Player2 : MonoBehaviour
             grid.bombList[bombIndex].GetComponent<SpriteRenderer>().color.r, grid.bombList[bombIndex].GetComponent<SpriteRenderer>().color.b, 255);
         index = bombIndex;
         timer = true;
+        GameObject newPos = grid.paths[player.positionIndex];
+
+        if (newPos.name == "Bomb")
+        {
+            player.canMove = false;
+        }
     }
 
     void DetonateBomb(int bombIndex)
     {
+        GameObject newPos = grid.paths[player.positionIndex];
 
-        if (grid.bombList[bombIndex].transform.position.x == grid.player.transform.position.x && grid.bombList[bombIndex].transform.position.y == grid.player.transform.position.y)
+        if (newPos.name == "Bomb")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

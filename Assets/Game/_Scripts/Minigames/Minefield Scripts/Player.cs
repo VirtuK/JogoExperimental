@@ -7,9 +7,10 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     public Grid grid;
-    int actualPositionX;
-    int actualPositionY;
-    int positionIndex = 0;
+    public int actualPositionX;
+    public int actualPositionY;
+    public int positionIndex = 0;
+    public bool canMove = true;
 
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
                 movementStarted = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && canMove)
         {
             movePlayer();
         }
