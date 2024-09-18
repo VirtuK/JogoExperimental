@@ -1821,6 +1821,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CurveRight
       objectReference: {fileID: 0}
+    - target: {fileID: 7293433965500163866, guid: f30d10ddc34d719448d8fbfc69a9e908, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9098281999413289851, guid: f30d10ddc34d719448d8fbfc69a9e908, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4700001
@@ -1847,7 +1851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9098281999413289851, guid: f30d10ddc34d719448d8fbfc69a9e908, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9098281999413289851, guid: f30d10ddc34d719448d8fbfc69a9e908, type: 3}
       propertyPath: m_LocalRotation.y
@@ -2693,8 +2697,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a330ddc2606ef0d4faafcc76227d3e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  duration: 2.5
+  maxSpeed: 1
+  pumpScript: {fileID: 684050966}
+  breakPower: 0.3
+  cooldown: 3
 --- !u!50 &1852080736
 Rigidbody2D:
   serializedVersion: 4
