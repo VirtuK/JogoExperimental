@@ -11,11 +11,15 @@ public class Player : MonoBehaviour
     int actualPositionY;
     int positionIndex = 0;
 
+    Animator animator;
+    SpriteRenderer spriteRenderer;
+
     [SerializeField] private Pump_SensorDistance sensor;
     bool movementStarted;
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -53,12 +57,15 @@ public class Player : MonoBehaviour
                 {
                     actualPositionX = i;
                     actualPositionY = j;
-
+                    checkAnimation();
                 }
 
             }
+            
         }
         
+        
+
     }
 
     public void movePlayer()
@@ -67,7 +74,6 @@ public class Player : MonoBehaviour
         transform.position = grid.walkPosition[positionIndex];
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.3f);
         checkPosition();
-        print("aaaaaaaa");
         GameObject newPos = grid.gridPosition[actualPositionX][actualPositionY];
         if (newPos.name != "Wall")
         {
@@ -76,6 +82,44 @@ public class Player : MonoBehaviour
             if (newPos.name == "Finish Point")
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+    }
+
+    void checkAnimation()
+    {
+        if (actualPositionX - 1 > -1 && actualPositionX + 1 < 17 && actualPositionY - 1 > -1 && actualPositionY + 1 < 17)
+        {
+            if (grid.walkPosition[positionIndex + 1].x > grid.walkPosition[positionIndex].x && grid.walkPosition[positionIndex + 1].y == grid.walkPosition[positionIndex].y)
+            {
+                spriteRenderer.flipX = true;
+                animator.SetBool("right", true);
+                animator.SetBool("up", false);
+                animator.SetBool("down", false);
+                animator.SetBool("left", false);
+            }
+            if (grid.walkPosition[positionIndex + 1].x < grid.walkPosition[positionIndex].x && grid.walkPosition[positionIndex + 1].y == grid.walkPosition[positionIndex].y)
+            {
+                spriteRenderer.flipX = false;
+                animator.SetBool("right", false);
+                animator.SetBool("up", false);
+                animator.SetBool("down", false);
+                animator.SetBool("left", true);
+            }
+            if (grid.walkPosition[positionIndex + 1].x == grid.walkPosition[positionIndex].x && grid.walkPosition[positionIndex + 1].y > grid.walkPosition[positionIndex].y)
+            {
+                animator.SetBool("right", false);
+                animator.SetBool("up", true);
+                animator.SetBool("down", false);
+                animator.SetBool("left", false);
+            }
+            if (grid.walkPosition[positionIndex + 1].x == grid.walkPosition[positionIndex].x && grid.walkPosition[positionIndex + 1].y < grid.walkPosition[positionIndex].y)
+            {
+                spriteRenderer.flipX = true;
+                animator.SetBool("right", false);
+                animator.SetBool("up", false);
+                animator.SetBool("down", true);
+                animator.SetBool("left", false);
             }
         }
     }
