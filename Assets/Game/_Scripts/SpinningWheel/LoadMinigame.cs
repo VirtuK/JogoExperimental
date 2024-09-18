@@ -51,7 +51,7 @@ public class LoadMinigame : MonoBehaviour
                 SceneManager.LoadScene("Balloon");
                 break;
             case 1:
-                print("Bomba");
+                SceneManager.LoadScene("Minefield");
                 break;
             case 2:
                 SceneManager.LoadScene("Minecart");
