@@ -14,7 +14,8 @@ public class MinigameTimer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counterUI;
     //--------------------------------------------------\\
 
-    void Start(){
+    void Start()
+    {
 
         counting = true;
         currentTime = maxTime;
@@ -22,28 +23,34 @@ public class MinigameTimer : MonoBehaviour
         SetCounterUIText();
     }
     //
-    void Update(){
+    void Update()
+    {
 
-        if(counting){
+        if (counting)
+        {
             currentTime -= Time.deltaTime;
         }
         SetCounterUIText();
     }
     //
-    void SetCounterUIText(){
+    void SetCounterUIText()
+    {
 
         TimeSpan time = TimeSpan.FromSeconds(currentTime);
-        counterText = time .ToString(@"m\:ss");
+        counterText = time.ToString(@"m\:ss");
         counterUI.text = counterText;
     }
     //
-    public void StopTimer(){
+    public void StopTimer()
+    {
         counting = false;
     }
     //
-    public bool TimeUp(){
-        
-        if(currentTime <= 0){
+    public bool TimeUp()
+    {
+
+        if (currentTime <= 0)
+        {
             counting = false;
             return true;
         }
