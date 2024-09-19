@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BalloonAir : MonoBehaviour
 {
@@ -103,6 +104,9 @@ public class BalloonAir : MonoBehaviour
                 playing = false;
                 airInside = airMax;
                 timer.StopTimer();
+                ScoreManager.instance.score_Player1 = 2;
+                ScoreManager.instance.score_Player2 = 1;
+                SceneManager.LoadScene("SpinningWheel");
             }
 
             else if (airInside < airMin && started)
@@ -110,12 +114,18 @@ public class BalloonAir : MonoBehaviour
                 print("Player 2 ganhou");
                 playing = false;
                 timer.StopTimer();
+                ScoreManager.instance.score_Player1 = 1;
+                ScoreManager.instance.score_Player2 = 2;
+                SceneManager.LoadScene("SpinningWheel");
             }
 
             if (playing && timer.TimeUp())
             {
                 print("Player 2 ganhou");
                 playing = false;
+                ScoreManager.instance.score_Player1 = 1;
+                ScoreManager.instance.score_Player2 = 2;
+                SceneManager.LoadScene("SpinningWheel");
             }
         }
     }

@@ -82,8 +82,9 @@ public class Player : MonoBehaviour
             checkPosition();
             if (newPos.name == "Finish Point")
             {
-                ScoreManager.instance.score_Player1++;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                ScoreManager.instance.score_Player1 = 2;
+                ScoreManager.instance.score_Player2 = 1;
+                SceneManager.LoadScene("SpinningWheel");
             }
         }
     }

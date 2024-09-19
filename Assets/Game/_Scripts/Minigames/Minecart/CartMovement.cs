@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CartMovement : MonoBehaviour
 {
@@ -71,8 +72,8 @@ public class CartMovement : MonoBehaviour
 
         if (timer.TimeUp())
         {
-            Endgame();
             playerWin = 2;
+            Endgame();
         }
 
         if (!playing && playerWin > 0)
@@ -176,6 +177,19 @@ public class CartMovement : MonoBehaviour
         canBreak = false;
         rb.velocity = Vector2.zero;
         timer.StopTimer();
+
+        if(playerWin == 1)
+        {
+            ScoreManager.instance.score_Player1 = 2;
+            ScoreManager.instance.score_Player2 = 1;
+            SceneManager.LoadScene("SpinningWheel");
+        }
+        else if(playerWin == 2)
+        {
+            ScoreManager.instance.score_Player1 = 1;
+            ScoreManager.instance.score_Player2 = 2;
+            SceneManager.LoadScene("SpinningWheel");
+        }
     }
     //---------------------------------------------\\
     private void OnTriggerEnter2D(Collider2D other)
@@ -199,13 +213,13 @@ public class CartMovement : MonoBehaviour
         if (other.CompareTag("Dynamite"))
         {
             other.GetComponent<Animator>().SetBool("explode", true);
-            Endgame();
             playerWin = 2;
+            Endgame();
         }
         if (other.CompareTag("Objective"))
         {
-            Endgame();
             playerWin = 1;
+            Endgame();
         }
     }
     //

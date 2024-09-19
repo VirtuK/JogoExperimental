@@ -185,7 +185,9 @@ public class Player2 : MonoBehaviour
 
         if (newPos.name == "Bomb")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            ScoreManager.instance.score_Player1 = 1;
+            ScoreManager.instance.score_Player2 = 2;
+            SceneManager.LoadScene("SpinningWheel");
         }
         Destroy(grid.bombList[bombIndex]);
         grid.bombList.Remove(grid.bombList[bombIndex]);
