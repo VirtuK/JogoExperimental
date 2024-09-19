@@ -14,7 +14,7 @@ public class MinigameTimer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counterUI;
     //--------------------------------------------------\\
 
-    void Start()
+    void Awake()
     {
 
         counting = true;
