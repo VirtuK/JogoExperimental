@@ -70,7 +70,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""ab6d33b7-d118-40af-96ca-7d599c605423"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -81,7 +81,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""51b8215a-9185-4a7d-900a-541e800efa6d"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -103,7 +103,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""92a196d2-62b7-4f5d-adad-0cd2b5580aa9"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/stick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -114,7 +114,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""ab8259d3-7102-4d1c-8da9-1da3ede954c9"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/stick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -125,7 +125,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3fa938e1-fe18-4ec3-b0b9-0aeaec2d49b0"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

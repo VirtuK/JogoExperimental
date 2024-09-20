@@ -26,6 +26,31 @@ public class Player2 : MonoBehaviour
     int index;
     int codeIndex = 0;
     // Start is called before the first frame update
+
+
+    public void OnLeftStick(InputAction.CallbackContext context)
+    {
+        input = new(input.x, Mathf.RoundToInt(context.ReadValue<float>()));
+    }
+    //
+    public void OnRightStick(InputAction.CallbackContext context)
+    {
+        input = new(Mathf.RoundToInt(context.ReadValue<float>()), input.y);
+    }
+    public void OnAction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            for (int i = 0; i < bombCodes.Count; i++)
+            {
+                if (lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
+                {
+                    bombAnimation(i);
+                    bombCodes.Remove(bombCodes[i]);
+                }
+            }
+        }
+    }
     void Start()
     {
         player = FindObjectOfType<Player>();
@@ -98,6 +123,7 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(input.y == 1)
         {
             lever1 = 1;
@@ -194,28 +220,5 @@ public class Player2 : MonoBehaviour
 
     }
 
-    public void OnLeftStick(InputAction.CallbackContext context)
-    {
-        input = new(input.x, Mathf.RoundToInt(context.ReadValue<float>()));
-    }
-    //
-    public void OnRightStick(InputAction.CallbackContext context)
-    {
-        input = new(Mathf.RoundToInt(context.ReadValue<float>()), input.y);
-    }
-    //
-    public void OnAction(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            for (int i = 0; i < bombCodes.Count; i++)
-            {
-                if (lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
-                {
-                    bombAnimation(i);
-                    bombCodes.Remove(bombCodes[i]);
-                }
-            }
-        }
-    }
+   
 }

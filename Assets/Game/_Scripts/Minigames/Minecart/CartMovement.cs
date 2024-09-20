@@ -20,7 +20,7 @@ public class CartMovement : MonoBehaviour
     [Header("Curva")]
     [SerializeField] float curveTime;
     private float curveCurrentTime;
-    private bool curve = false;
+    public bool curve = false;
 
     //---------------------------------------------\\
     [Header("Freio")]

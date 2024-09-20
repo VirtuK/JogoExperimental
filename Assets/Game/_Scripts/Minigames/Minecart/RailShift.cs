@@ -6,12 +6,14 @@ using System.Collections;
 
 //---------------------------------------------\\
 [System.Serializable]
+
 public struct Lever
 {
     public SpriteRenderer codeLSprite;
     public SpriteRenderer codeRSprite;
     public SpriteRenderer curveSprite;
     public BoxCollider2D rightTrack;
+    
 }
 //---------------------------------------------\\
 public class RailShift : MonoBehaviour
@@ -33,6 +35,8 @@ public class RailShift : MonoBehaviour
     //---------------------------------------------\\
     [SerializeField] float cooldown;
     Coroutine cooldownCoroutine;
+
+    public CartMovement cartMovement;
 
     //---------------------------------------------\\
     void Start()
@@ -104,12 +108,16 @@ public class RailShift : MonoBehaviour
             activeIndex = selectionIndex;
 
             levers[activeIndex].curveSprite.color = activeColor;
-            levers[activeIndex].curveSprite.GetComponent<BoxCollider2D>().enabled = true;
-
-            if (levers[activeIndex].rightTrack != null)
+            if (!cartMovement.curve)
             {
-                levers[activeIndex].rightTrack.enabled = false;
+                levers[activeIndex].curveSprite.GetComponent<BoxCollider2D>().enabled = true;
+
+                if (levers[activeIndex].rightTrack != null)
+                {
+                    levers[activeIndex].rightTrack.enabled = false;
+                }
             }
+
 
             cooldownCoroutine ??= StartCoroutine(Cooldown());
         }
