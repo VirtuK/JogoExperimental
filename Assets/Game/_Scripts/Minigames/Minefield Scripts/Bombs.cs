@@ -36,12 +36,12 @@ public class Bombs : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < grid.bombList.Count; i++)
+            /*for (int i = 0; i < grid.bombList.Count; i++)
             {
                 bombColor = grid.bombList[i].GetComponent<SpriteRenderer>().color;
                 grid.bombList[i].GetComponent<SpriteRenderer>().color = new Color(bombColor.r, bombColor.g, bombColor.b, 0);
             }
-            bombs = false;
+            bombs = false;*/
         }
         
         

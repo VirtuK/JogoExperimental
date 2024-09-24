@@ -57,8 +57,30 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "positive",
+                    "id": "c9c356d8-e343-4c98-a71b-7c0f6cad3c83",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "negative",
                     "id": "51b8215a-9185-4a7d-900a-541e800efa6d",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "04b11e1d-c0cf-4f04-8ca7-4a9fe62ead4d",
                     "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/down",
                     "interactions": "",
                     "processors": "",
@@ -93,6 +115,28 @@
                     "name": "negative",
                     "id": "ab8259d3-7102-4d1c-8da9-1da3ede954c9",
                     "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "c2d2ecdd-27b1-4c53-8684-2164e10c34f2",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "85a26804-d591-4159-8279-79ec57cb6217",
+                    "path": "<Gamepad>/rightStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
