@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        
+
         if (instance != null)
         {
             Destroy(gameObject);
@@ -22,6 +21,5 @@ public class ScoreManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        print(score_Player1);
     }
 }

@@ -1,51 +1,20 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
-
 
 public class LoadMinigame : MonoBehaviour
 {
-    [Header("Painel")]
-    [SerializeField] GameObject panel;
-    [Header("Icon")]
-    [SerializeField] Sprite[] minigameIcons;
-    [SerializeField] Image icon;
-
-    [Header("Timer")]
-    [SerializeField] TextMeshProUGUI timerText;
-
-    [Header("Roleta")]
-    [SerializeField] Roulette rouletteScript;
-
-    void Start()
+    public IEnumerator Timer(int index)
     {
-        panel.SetActive(false);
-    }
-
-    void Update()
-    {
-        if (!panel.activeSelf && rouletteScript.Stopped())
-        {
-            icon.sprite = minigameIcons[rouletteScript.GetIndex()];
-            panel.SetActive(true);
-            StartCoroutine(Timer());
-        }
-    }
-
-    IEnumerator Timer()
-    {
-        float currentTime = 3f;
+        float currentTime = 2f;
 
         while (currentTime > 0f)
         {
-            timerText.text = currentTime.ToString() + "...";
             yield return new WaitForSeconds(1f);
             currentTime--;
         }
 
-        switch (rouletteScript.GetIndex())
+        switch (index)
         {
             case 0:
                 SceneManager.LoadScene("Balloon");

@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
 
 public class SpinButtonUI : MonoBehaviour
 {
@@ -12,11 +11,23 @@ public class SpinButtonUI : MonoBehaviour
     [SerializeField] private float fillAnimDuration = 0.2f;
 
     //-------------------------------------------\\
-    [SerializeField] TextMeshProUGUI p1Text, p2Text;
+    [SerializeField] Image p1Text, p2Text;
     [SerializeField] Image spinButton;
-    [SerializeField] Color disabledColor;
+    LerpScaleAnim anim;
 
     //-------------------------------------------\\
+
+    void Start()
+    {
+        anim = GetComponent<LerpScaleAnim>();
+        anim.PlayScaleAnim();
+    }
+    //
+    public void StopAnim()
+    {
+        anim.StopScaleAnim();
+    }
+    //
     public void FillBar()
     {
         StartCoroutine(FillingAnim());
@@ -50,7 +61,12 @@ public class SpinButtonUI : MonoBehaviour
     //
     public IEnumerator FadeOutText()
     {
-        spinButton.color = disabledColor;
+        while (bar.fillAmount < 1)
+        {
+            yield return null;
+        }
+
+        spinButton.enabled = true;
 
         float elapsedTime = 0f;
         float colorAlpha = 1f;
@@ -74,8 +90,8 @@ public class SpinButtonUI : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 0.1f;
 
-        Vector3 startValue = new(1f, 1f, 1f);
-        Vector3 endValue = new(1.5f, 1.5f, 1.5f);
+        Vector3 startValue = new(0.66f, 0.66f, 0.66f);
+        Vector3 endValue = new(0.88f, 0.88f, 0.88f);
 
         while (elapsedTime < duration)
         {

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,14 +5,14 @@ using UnityEngine.UI;
 public class ShowScore : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] List<Image> p1Score = new List<Image>(); 
+    [SerializeField] List<Image> p1Score = new List<Image>();
     [SerializeField] List<Image> p2Score = new List<Image>();
     [SerializeField] Sprite first;
     [SerializeField] Sprite second;
     void Start()
     {
         ScoreManager.instance.minigameCount++;
-        if(ScoreManager.instance.minigameCount >= 0) checkScore();
+        if (ScoreManager.instance.minigameCount >= 0) checkScore();
     }
 
     void checkScore()

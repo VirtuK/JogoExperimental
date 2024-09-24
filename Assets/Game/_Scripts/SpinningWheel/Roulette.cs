@@ -23,8 +23,10 @@ public class Roulette : MonoBehaviour
 
     //---------------------------------------------\\
     private bool spinning = false;
-    private bool stopped = false;
     private float rotation = 0f;
+    //
+    [SerializeField] LoadMinigame goToMinigame;
+    [SerializeField] LerpScaleAnim[] icons;
 
     //---------------------------------------------\\
 
@@ -52,7 +54,8 @@ public class Roulette : MonoBehaviour
         {
             speed = 0;
             spinning = false;
-            stopped = true;
+
+            StartCoroutine(goToMinigame.Timer(GetIndex()));
         }
 
         rotation += 100 * Time.deltaTime * speed;
@@ -68,12 +71,9 @@ public class Roulette : MonoBehaviour
 
         int minigameIndex = Mathf.RoundToInt(slice) % 6;
 
+        icons[minigameIndex].PlayScaleAnim();
+
         return minigameIndex % 3;
-    }
-    //
-    public bool Stopped()
-    {
-        return stopped;
     }
     //
     public void Spin()

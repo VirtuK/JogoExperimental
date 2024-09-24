@@ -30,6 +30,11 @@ public class SpinInput : MonoBehaviour
             canSpin = false;
             StartCoroutine(spinUI.FadeOutText());
         }
+
+        if (p1Ready || p2Ready)
+        {
+            spinUI.StopAnim();
+        }
     }
     //
     public void OnAction(InputAction.CallbackContext context)
