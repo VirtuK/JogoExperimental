@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
     }
     void checkAnimation()
     {
-        if (actualPositionX - 1 > -1 && actualPositionX + 1 < 17 && actualPositionY - 1 > -1 && actualPositionY + 1 < 17)
+        if (actualPositionX - 1 > -1 && actualPositionX + 1 < 9 && actualPositionY - 1 > -1 && actualPositionY + 1 < 9)
         {
             if (grid.walkPosition[positionIndex + 1].x > grid.walkPosition[positionIndex].x && grid.walkPosition[positionIndex + 1].y == grid.walkPosition[positionIndex].y)
             {

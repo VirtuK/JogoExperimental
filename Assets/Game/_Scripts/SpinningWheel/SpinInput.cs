@@ -24,7 +24,7 @@ public class SpinInput : MonoBehaviour
     {
         if (!p1Ready) CheckPumpInput();
 
-        if (canSpin && p1Ready && p2Ready && ScoreManager.instance.minigameCount < 5)
+        if (canSpin && p1Ready && p2Ready && ScoreManager.instance.minigameCount < 4)
         {
             rouletteScript.Spin();
             canSpin = false;
