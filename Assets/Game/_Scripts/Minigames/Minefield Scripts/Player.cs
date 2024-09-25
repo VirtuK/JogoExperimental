@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Pump_SensorDistance sensor;
     bool movementStarted;
+
+    public TextMeshProUGUI result;
+    Coroutine coroutine;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,11 +36,11 @@ public class Player : MonoBehaviour
     {
         if (!movementStarted)
         {
-            if(sensor.GetDistance() >= 30) movementStarted = true;
+            if (sensor.GetDistance() >= 30) movementStarted = true;
         }
         else
         {
-            if(sensor.GetDistance() <= 10)
+            if (sensor.GetDistance() <= 10)
             {
                 movePlayer();
                 movementStarted = false;
@@ -62,10 +66,10 @@ public class Player : MonoBehaviour
                 }
 
             }
-            
+
         }
-        
-        
+
+
 
     }
 
@@ -82,13 +86,18 @@ public class Player : MonoBehaviour
             checkPosition();
             if (newPos.name == "Finish Point")
             {
+                result.text = $"player 2 Venceu!";
                 ScoreManager.instance.score_Player1 = 2;
                 ScoreManager.instance.score_Player2 = 1;
-                SceneManager.LoadScene("SpinningWheel");
+                coroutine ??= StartCoroutine(LoadRoulette());
             }
         }
     }
-
+    IEnumerator LoadRoulette()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("SpinningWheel");
+    }
     void checkAnimation()
     {
         if (actualPositionX - 1 > -1 && actualPositionX + 1 < 17 && actualPositionY - 1 > -1 && actualPositionY + 1 < 17)

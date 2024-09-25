@@ -27,6 +27,8 @@ public class Player2 : MonoBehaviour
     int codeIndex = 0;
     // Start is called before the first frame update
 
+    public TextMeshProUGUI result;
+    Coroutine coroutine;
 
     public void OnLeftStick(InputAction.CallbackContext context)
     {
@@ -56,13 +58,13 @@ public class Player2 : MonoBehaviour
         player = FindObjectOfType<Player>();
         List<int> bombs = new List<int>();
         List<Vector2> codes = new List<Vector2>();
-        bombs.AddRange(new List<int> {0,1,2,3});
-        codes.AddRange(new List<Vector2> { new Vector2(0,0), new Vector2(1,0), new Vector2(1,1), new Vector2(0,1) });
-        
-        for(int i = 0; i < bombs.Count; i++)
+        bombs.AddRange(new List<int> { 0, 1, 2, 3 });
+        codes.AddRange(new List<Vector2> { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 1) });
+
+        for (int i = 0; i < bombs.Count; i++)
         {
             List<int> bools = new List<int>();
-            int r = Random.Range(0,codes.Count);
+            int r = Random.Range(0, codes.Count);
             if (codes[r].x == 1)
             {
                 bools.Add(1);
@@ -83,11 +85,11 @@ public class Player2 : MonoBehaviour
             codes.Remove(codes[r]);
         }
 
-        for(int i = -2; i <= 4; i++)
+        for (int i = -2; i <= 4; i++)
         {
-            if(i % 2 == 0)
+            if (i % 2 == 0)
             {
-                if(i < 0)
+                if (i < 0)
                 {
                     codeIndex = 0;
                 }
@@ -114,17 +116,17 @@ public class Player2 : MonoBehaviour
                 }
 
             }
-            
+
 
         }
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if(input.y == 1)
+
+        if (input.y == 1)
         {
             lever1 = 1;
             lever1Object.color = Color.blue;
@@ -149,7 +151,7 @@ public class Player2 : MonoBehaviour
             timer_time -= Time.deltaTime;
         }
 
-        if(timer_time <= 0)
+        if (timer_time <= 0)
         {
             DetonateBomb(index);
             timer = false;
@@ -211,14 +213,19 @@ public class Player2 : MonoBehaviour
 
         if (newPos.name == "Bomb")
         {
+            result.text = $"player 1 Venceu!";
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
-            SceneManager.LoadScene("SpinningWheel");
+            coroutine ??= StartCoroutine(LoadRoulette());
         }
         Destroy(grid.bombList[bombIndex]);
         grid.bombList.Remove(grid.bombList[bombIndex]);
 
     }
 
-   
+    IEnumerator LoadRoulette()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("SpinningWheel");
+    }
 }

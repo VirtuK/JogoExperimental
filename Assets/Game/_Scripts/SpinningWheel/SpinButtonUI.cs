@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class SpinButtonUI : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class SpinButtonUI : MonoBehaviour
     [SerializeField] private float fillAnimDuration = 0.2f;
 
     //-------------------------------------------\\
-    [SerializeField] Image p1Text, p2Text;
+    [SerializeField] TextMeshProUGUI p1Text, p2Text;
     [SerializeField] Image spinButton;
     LerpScaleAnim anim;
 
@@ -90,8 +91,8 @@ public class SpinButtonUI : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 0.1f;
 
-        Vector3 startValue = new(0.66f, 0.66f, 0.66f);
-        Vector3 endValue = new(0.88f, 0.88f, 0.88f);
+        Vector3 startValue = new(1f, 1f, 1f);
+        Vector3 endValue = new(1.2f, 1.2f, 1.2f);
 
         while (elapsedTime < duration)
         {

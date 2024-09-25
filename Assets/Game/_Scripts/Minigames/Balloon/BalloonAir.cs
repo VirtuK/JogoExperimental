@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 
 public class BalloonAir : MonoBehaviour
 {
@@ -31,6 +33,9 @@ public class BalloonAir : MonoBehaviour
     [Header("Rip generator")]
     private TargetGenerator targetScript;
     private bool movementStarted;
+    //
+    public TextMeshProUGUI result;
+    Coroutine coroutine;
 
     private void Start()
     {
@@ -100,33 +105,38 @@ public class BalloonAir : MonoBehaviour
 
             else if (airInside >= airMax)
             {
-                print("Player 1 ganhou");
+                result.text = $"player 1 Venceu!";
                 playing = false;
                 airInside = airMax;
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 2;
                 ScoreManager.instance.score_Player2 = 1;
-                SceneManager.LoadScene("SpinningWheel");
+                coroutine ??= StartCoroutine(LoadRoulette());
             }
 
             else if (airInside < airMin && started)
             {
-                print("Player 2 ganhou");
+                result.text = $"player 2 Venceu!";
                 playing = false;
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                SceneManager.LoadScene("SpinningWheel");
+                coroutine ??= StartCoroutine(LoadRoulette());
             }
 
             if (playing && timer.TimeUp())
             {
-                print("Player 2 ganhou");
+                result.text = $"player 2 Venceu!";
                 playing = false;
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                SceneManager.LoadScene("SpinningWheel");
+                coroutine ??= StartCoroutine(LoadRoulette());
             }
         }
+    }
+    IEnumerator LoadRoulette()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("SpinningWheel");
     }
 }

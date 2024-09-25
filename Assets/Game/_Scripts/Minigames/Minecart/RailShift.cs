@@ -1,37 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-
-//---------------------------------------------\\
 [System.Serializable]
-
-public struct Lever
+public struct Curves
 {
-    public SpriteRenderer codeLSprite;
-    public SpriteRenderer codeRSprite;
     public SpriteRenderer curveSprite;
     public BoxCollider2D rightTrack;
-    
 }
 //---------------------------------------------\\
 public class RailShift : MonoBehaviour
 {
-    [SerializeField] Image leverLeft;
-    [SerializeField] Image leverRight;
-
-    //---------------------------------------------\\
-    [SerializeField] Lever[] levers;
-    //---------------------------------------------\\
-
     [SerializeField] Sprite normalSprite;
     [SerializeField] Sprite highlight;
 
-    //---------------------------------------------\\
-    [SerializeField] Color activeColor;
-    private int selectionIndex = 0;
-    private int activeIndex = 0;
     //---------------------------------------------\\
     [SerializeField] float cooldown;
     Coroutine cooldownCoroutine;
@@ -39,48 +21,49 @@ public class RailShift : MonoBehaviour
     public CartMovement cartMovement;
 
     //---------------------------------------------\\
+
+    [SerializeField] Curves[] curvesObj;
+    [SerializeField] Curves[,] curves = new Curves[2, 2];
+
+    int l = 0;
+    int r = 1;
+
+    //---------------------------------------------\\
+    [SerializeField] Color activeColor;
+    private int[] selectionIndex = new int[2];
+    private int[] activeIndex = new int[2];
+
+    //---------------------------------------------\\
+
     void Start()
     {
-        leverLeft.color = Color.gray;
-        leverRight.color = Color.gray;
+        curves[0, 0] = curvesObj[0];
+        curves[1, 0] = curvesObj[1];
+        curves[1, 1] = curvesObj[2];
+        curves[0, 1] = curvesObj[3];
+
+        CheckCode();
     }
-    //
     void CheckCode()
     {
-        for (int i = 0; i < levers.Length; i++)
-        {
-            if (leverLeft.color == levers[i].codeLSprite.color)
-            {
-                if (leverRight.color == levers[i].codeRSprite.color)
-                {
-                    if (cooldownCoroutine != null)
-                    {
-                        if (selectionIndex != activeIndex)
-                        {
-                            levers[selectionIndex].curveSprite.sprite = normalSprite;
-                        }
-                    }
-                    else levers[selectionIndex].curveSprite.sprite = normalSprite;
+        if (curves[selectionIndex[0], selectionIndex[1]].curveSprite.color != activeColor) curves[selectionIndex[0], selectionIndex[1]].curveSprite.sprite = normalSprite;
 
-                    levers[i].curveSprite.sprite = highlight;
-                    selectionIndex = i;
-                    return;
-                }
-            }
-        }
+        selectionIndex[0] = l;
+        selectionIndex[1] = r;
+
+        curves[selectionIndex[0], selectionIndex[1]].curveSprite.sprite = highlight;
     }
     //
     public void OnLeftStick(InputAction.CallbackContext context)
     {
         if (Mathf.RoundToInt(context.ReadValue<float>()) > 0)
         {
-            leverLeft.color = Color.blue;
+            l = 0;
         }
-        else if (Mathf.RoundToInt(context.ReadValue<float>()) < 0)
+        if (Mathf.RoundToInt(context.ReadValue<float>()) < 0)
         {
-            leverLeft.color = Color.red;
+            l = 1;
         }
-
         CheckCode();
     }
     //
@@ -88,13 +71,12 @@ public class RailShift : MonoBehaviour
     {
         if (Mathf.RoundToInt(context.ReadValue<float>()) > 0)
         {
-            leverRight.color = Color.blue;
+            r = 1;
         }
-        else if (Mathf.RoundToInt(context.ReadValue<float>()) < 0)
+        if (Mathf.RoundToInt(context.ReadValue<float>()) < 0)
         {
-            leverRight.color = Color.red;
+            r = 0;
         }
-
         CheckCode();
     }
     //
@@ -102,22 +84,21 @@ public class RailShift : MonoBehaviour
     {
         if (context.performed && cooldownCoroutine == null)
         {
-            leverLeft.color = Color.gray;
-            leverRight.color = Color.gray;
+            activeIndex[0] = l;
+            activeIndex[1] = r;
 
-            activeIndex = selectionIndex;
 
-            levers[activeIndex].curveSprite.color = activeColor;
+            curves[activeIndex[0], activeIndex[1]].curveSprite.color = activeColor;
+
             if (!cartMovement.curve)
             {
-                levers[activeIndex].curveSprite.GetComponent<BoxCollider2D>().enabled = true;
+                curves[activeIndex[0], activeIndex[1]].curveSprite.GetComponent<BoxCollider2D>().enabled = true;
 
-                if (levers[activeIndex].rightTrack != null)
+                if (curves[activeIndex[0], activeIndex[1]].rightTrack != null)
                 {
-                    levers[activeIndex].rightTrack.enabled = false;
+                    curves[activeIndex[0], activeIndex[1]].rightTrack.enabled = false;
                 }
             }
-
 
             cooldownCoroutine ??= StartCoroutine(Cooldown());
         }
@@ -127,13 +108,14 @@ public class RailShift : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldown);
 
-        levers[activeIndex].curveSprite.sprite = normalSprite;
-        levers[activeIndex].curveSprite.color = Color.white;
-        levers[activeIndex].curveSprite.GetComponent<BoxCollider2D>().enabled = false;
+        curves[activeIndex[0], activeIndex[1]].curveSprite.sprite = normalSprite;
+        curves[activeIndex[0], activeIndex[1]].curveSprite.color = Color.white;
+        curves[activeIndex[0], activeIndex[1]].curveSprite.GetComponent<BoxCollider2D>().enabled = false;
 
-        if (levers[activeIndex].rightTrack != null)
+
+        if (curves[activeIndex[0], activeIndex[1]].rightTrack != null)
         {
-            levers[activeIndex].rightTrack.enabled = true;
+            curves[activeIndex[0], activeIndex[1]].rightTrack.enabled = true;
         }
 
         cooldownCoroutine = null;

@@ -23,7 +23,7 @@ public class RipScript : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
 
         minScale = transform.localScale;
-        maxScale = new(minScale.x + 0.008f, minScale.y + 0.008f, minScale.z + 0.008f);
+        maxScale = new(minScale.x + 0.05f, minScale.y + 0.05f, minScale.z + 0.05f);
     }
     //
     void Update()
@@ -33,7 +33,7 @@ public class RipScript : MonoBehaviour
             targetScale = scaleUp ? maxScale : minScale;
             scaleUp = !scaleUp;
 
-            animCoroutine ??= StartCoroutine(LerpScale(targetScale, 1f));
+            animCoroutine ??= StartCoroutine(LerpScale(targetScale, 0.7f));
         }
 
         if (!balloonScript.playing && fadeCoroutine == null)

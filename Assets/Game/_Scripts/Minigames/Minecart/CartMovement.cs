@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class CartMovement : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class CartMovement : MonoBehaviour
     public int playerWin = 0;
     private bool playing = false;
     public TextMeshProUGUI result;
+    Coroutine coroutine;
 
     //---------------------------------------------\\
     void Start()
@@ -78,7 +80,7 @@ public class CartMovement : MonoBehaviour
 
         if (!playing && playerWin > 0)
         {
-            result.text = $"Player {playerWin} Venceu!";
+            result.text = $"player {playerWin} Venceu!";
         }
     }
 
@@ -178,18 +180,18 @@ public class CartMovement : MonoBehaviour
         rb.velocity = Vector2.zero;
         timer.StopTimer();
 
-        if(playerWin == 1)
+        if (playerWin == 1)
         {
             ScoreManager.instance.score_Player1 = 2;
             ScoreManager.instance.score_Player2 = 1;
-            SceneManager.LoadScene("SpinningWheel");
         }
-        else if(playerWin == 2)
+        else if (playerWin == 2)
         {
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
-            SceneManager.LoadScene("SpinningWheel");
         }
+
+        coroutine ??= StartCoroutine(LoadRoulette());
     }
     //---------------------------------------------\\
     private void OnTriggerEnter2D(Collider2D other)
@@ -257,5 +259,11 @@ public class CartMovement : MonoBehaviour
         }
         transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, rotation);
         curveCurrentTime += Time.deltaTime;
+    }
+    //
+    IEnumerator LoadRoulette()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("SpinningWheel");
     }
 }
