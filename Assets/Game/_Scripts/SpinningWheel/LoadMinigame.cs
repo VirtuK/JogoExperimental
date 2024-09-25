@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LoadMinigame : MonoBehaviour
 {
+    public Animator fade;
+
     public IEnumerator Timer(int index)
     {
         float currentTime = 2f;
@@ -13,6 +15,9 @@ public class LoadMinigame : MonoBehaviour
             yield return new WaitForSeconds(1f);
             currentTime--;
         }
+
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
 
         switch (index)
         {

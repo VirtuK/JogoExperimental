@@ -47,6 +47,7 @@ public class CartMovement : MonoBehaviour
     private bool playing = false;
     public TextMeshProUGUI result;
     Coroutine coroutine;
+    public Animator fade;
 
     //---------------------------------------------\\
     void Start()
@@ -263,7 +264,9 @@ public class CartMovement : MonoBehaviour
     //
     IEnumerator LoadRoulette()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("SpinningWheel");
     }
 }
