@@ -113,9 +113,12 @@ public class RailShift : MonoBehaviour
         curves[activeIndex[0], activeIndex[1]].curveSprite.GetComponent<BoxCollider2D>().enabled = false;
 
 
-        if (curves[activeIndex[0], activeIndex[1]].rightTrack != null)
+        if (!cartMovement.curve)
         {
-            curves[activeIndex[0], activeIndex[1]].rightTrack.enabled = true;
+            if (curves[activeIndex[0], activeIndex[1]].rightTrack != null)
+            {
+                curves[activeIndex[0], activeIndex[1]].rightTrack.enabled = true;
+            }
         }
 
         cooldownCoroutine = null;

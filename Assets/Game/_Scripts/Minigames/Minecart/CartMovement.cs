@@ -19,8 +19,9 @@ public class CartMovement : MonoBehaviour
 
     //---------------------------------------------\\
     [Header("Curva")]
-    [SerializeField] float curveTime;
-    private float curveCurrentTime;
+    [SerializeField] float curvaRadius = 1f; // Raio da curva
+    private float curvaLength; // Comprimento da curva baseado no raio
+    private float curvaDistanceTraveled; // Distância percorrida na curva
     public bool curve = false;
 
     //---------------------------------------------\\
@@ -55,6 +56,9 @@ public class CartMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         speed = maxSpeed;
         timer.enabled = false;
+
+        //comprimento da curva baseado no raio da circunferência
+        curvaLength = Mathf.PI * curvaRadius / 2f; // 90 graus
     }
     //
     void FixedUpdate()
@@ -77,11 +81,6 @@ public class CartMovement : MonoBehaviour
         {
             playerWin = 2;
             Endgame();
-        }
-
-        if (!playing && playerWin > 0)
-        {
-            result.text = $"player {playerWin} Venceu!";
         }
     }
 
@@ -133,12 +132,6 @@ public class CartMovement : MonoBehaviour
     {
         speed *= breakPower;
 
-        if (curve)
-        {
-            curveCurrentTime = 0f;
-            startRotation = transform.localEulerAngles.z;
-        }
-
         if (speed <= minSpeed)
         {
             rb.velocity = Vector2.zero;
@@ -162,12 +155,6 @@ public class CartMovement : MonoBehaviour
             stopped = false;
             canBreak = true;
             cooldown = false;
-
-            if (curve)
-            {
-                curveCurrentTime = 0f;
-                startRotation = transform.localEulerAngles.z;
-            }
         }
 
         coolElapsedTime += Time.deltaTime;
@@ -192,6 +179,8 @@ public class CartMovement : MonoBehaviour
             ScoreManager.instance.score_Player2 = 2;
         }
 
+        result.text = $"player {playerWin} Venceu!";
+
         coroutine ??= StartCoroutine(LoadRoulette());
     }
     //---------------------------------------------\\
@@ -205,11 +194,10 @@ public class CartMovement : MonoBehaviour
                 transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, targetRotation);
             }
 
-            curve = true;
-            curveCurrentTime = 0f;
-
             startRotation = transform.localEulerAngles.z;
             targetRotation = SetDirection(other.transform);
+            curvaDistanceTraveled = 0f;
+            curve = true;
 
             other.enabled = false;
         }
@@ -246,20 +234,23 @@ public class CartMovement : MonoBehaviour
     //
     void FollowCurve()
     {
-        float duration = curveTime / speed;
+        //distância que o carrinho percorre na curva baseado na velocidade
+        float distanceToTravel = speed * Time.deltaTime;
+        curvaDistanceTraveled += distanceToTravel;
 
-        if (curveCurrentTime < duration)
+        //percentual percorrido da curva
+        float curvaPercentComplete = curvaDistanceTraveled / curvaLength;
+
+        //completou a curva
+        if (curvaPercentComplete >= 1f)
         {
-            float t = curveCurrentTime / duration;
-            rotation = Mathf.Lerp(startRotation, targetRotation, t);
-        }
-        else
-        {
-            rotation = targetRotation;
+            curvaPercentComplete = 1f;
             curve = false;
         }
-        transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, rotation);
-        curveCurrentTime += Time.deltaTime;
+
+        //lerp da rotação com base na distância percorrida na curva
+        rotation = Mathf.Lerp(startRotation, targetRotation, curvaPercentComplete);
+        transform.localRotation = Quaternion.Euler(0f, 0f, rotation);
     }
     //
     IEnumerator LoadRoulette()
