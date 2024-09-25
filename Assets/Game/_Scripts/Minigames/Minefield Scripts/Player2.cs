@@ -214,7 +214,7 @@ public class Player2 : MonoBehaviour
 
         if (newPos.name == "Bomb")
         {
-            result.text = $"player 1 Venceu!";
+            result.text = $"player 2 Venceu!";
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
             coroutine ??= StartCoroutine(LoadRoulette());

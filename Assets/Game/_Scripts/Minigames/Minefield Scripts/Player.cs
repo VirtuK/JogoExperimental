@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
             checkPosition();
             if (newPos.name == "Finish Point")
             {
-                result.text = $"player 2 Venceu!";
+                result.text = $"player 1 Venceu!";
                 ScoreManager.instance.score_Player1 = 2;
                 ScoreManager.instance.score_Player2 = 1;
                 coroutine ??= StartCoroutine(LoadRoulette());
