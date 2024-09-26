@@ -110,6 +110,7 @@ public class CartMovement : MonoBehaviour
                     playing = true;
                     stopped = false;
                     timer.enabled = true;
+		    logo.enabled = false;
 
                 }
                 else if (canBreak)
