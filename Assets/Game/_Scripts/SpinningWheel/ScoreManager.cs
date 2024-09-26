@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
     public int minigameCount = -1;
     public List<int> player1score;
     public List<int> player2score;
+    public int p1 = 0, p2 = 0;
 
     private void Awake()
     {

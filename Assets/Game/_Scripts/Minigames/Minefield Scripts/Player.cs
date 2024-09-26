@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI result;
     Coroutine coroutine;
     public Animator fade;
+    public Image logo;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -31,6 +33,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         CheckPumpInput();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            coroutine ??= StartCoroutine(LoadMenu());
+        }
     }
 
     void CheckPumpInput()
@@ -45,11 +52,13 @@ public class Player : MonoBehaviour
             {
                 movePlayer();
                 movementStarted = false;
+                logo.enabled = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.P) && canMove)
         {
-            movePlayer();
+            if (!logo.enabled) movePlayer();
+            else logo.enabled = false;
         }
     }
 
@@ -65,13 +74,9 @@ public class Player : MonoBehaviour
                     actualPositionY = j;
                     checkAnimation();
                 }
-
             }
 
         }
-
-
-
     }
 
     public void movePlayer()
@@ -100,6 +105,12 @@ public class Player : MonoBehaviour
         fade.SetBool("fade", true);
         yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("SpinningWheel");
+    }
+    IEnumerator LoadMenu()
+    {
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(0);
     }
     void checkAnimation()
     {

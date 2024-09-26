@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BalloonAir : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class BalloonAir : MonoBehaviour
     public TextMeshProUGUI result;
     Coroutine coroutine;
     public Animator fade;
+    public Image logo;
+    public Animator balloonAnim;
+    public GameObject balloonbottom, seat;
 
     private void Start()
     {
@@ -76,6 +80,7 @@ public class BalloonAir : MonoBehaviour
     private void AddAir()
     {
         airInside += pumpAir;
+
     }
 
     private void Update()
@@ -100,23 +105,31 @@ public class BalloonAir : MonoBehaviour
                 {
                     started = true;
                     timer.enabled = true;
+                    logo.enabled = false;
                 }
 
             }
-
             else if (airInside >= airMax)
             {
-                result.text = $"player 1 Venceu!";
+                balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
+                balloonAnim.SetBool("explode", true);
+                lineRendererLeft.enabled = false;
+                lineRendererRight.enabled = false;
+                balloonbottom.SetActive(false);
+                seat.SetActive(false);
+
+                result.text = $"player 2 Venceu!";
                 playing = false;
                 airInside = airMax;
                 timer.StopTimer();
-                ScoreManager.instance.score_Player1 = 2;
-                ScoreManager.instance.score_Player2 = 1;
+                ScoreManager.instance.score_Player1 = 1;
+                ScoreManager.instance.score_Player2 = 2;
                 coroutine ??= StartCoroutine(LoadRoulette());
             }
 
             else if (airInside < airMin && started)
             {
+                balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
                 result.text = $"player 2 Venceu!";
                 playing = false;
                 timer.StopTimer();
@@ -127,12 +140,39 @@ public class BalloonAir : MonoBehaviour
 
             if (playing && timer.TimeUp())
             {
-                result.text = $"player 2 Venceu!";
-                playing = false;
-                ScoreManager.instance.score_Player1 = 1;
-                ScoreManager.instance.score_Player2 = 2;
-                coroutine ??= StartCoroutine(LoadRoulette());
+                balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
+
+                if (airInside > airMin && airInside < airMax)
+                {
+                    result.text = $"player 1 Venceu!";
+                    playing = false;
+                    timer.StopTimer();
+                    ScoreManager.instance.score_Player1 = 2;
+                    ScoreManager.instance.score_Player2 = 1;
+                    coroutine ??= StartCoroutine(LoadRoulette());
+                }
+                else
+                {
+                    result.text = $"player 2 Venceu!";
+                    playing = false;
+                    timer.StopTimer();
+                    ScoreManager.instance.score_Player1 = 1;
+                    ScoreManager.instance.score_Player2 = 2;
+                    coroutine ??= StartCoroutine(LoadRoulette());
+                }
             }
+        }
+        if ((airInside >= (airMax - 1) && airInside < airMax) || (airInside <= (airMin + 0.3) && airInside > airMin))
+        {
+            balloonAnim.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else
+        {
+            balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            coroutine ??= StartCoroutine(LoadMenu());
         }
     }
     IEnumerator LoadRoulette()
@@ -141,5 +181,11 @@ public class BalloonAir : MonoBehaviour
         fade.SetBool("fade", true);
         yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("SpinningWheel");
+    }
+    IEnumerator LoadMenu()
+    {
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(0);
     }
 }

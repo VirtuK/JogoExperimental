@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ShowScore : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -9,10 +8,25 @@ public class ShowScore : MonoBehaviour
     [SerializeField] List<Image> p2Score = new List<Image>();
     [SerializeField] Sprite first;
     [SerializeField] Sprite second;
+    [SerializeField] Image[] trophy;
+    public GameObject victory;
+    public GameObject text;
+
     void Start()
     {
         ScoreManager.instance.minigameCount++;
         if (ScoreManager.instance.minigameCount >= 0) checkScore();
+
+
+        if (ScoreManager.instance.minigameCount >= 4)
+        {
+            enabled = true;
+            victory.SetActive(true);
+            text.SetActive(true);
+
+            if (ScoreManager.instance.p1 > ScoreManager.instance.p2) trophy[0].enabled = true;
+            else trophy[1].enabled = true;
+        }
     }
 
     void checkScore()
@@ -21,6 +35,7 @@ public class ShowScore : MonoBehaviour
         {
             p1Score[ScoreManager.instance.minigameCount].sprite = first;
             ScoreManager.instance.player1score.Add(2);
+            ScoreManager.instance.p1++;
         }
         else if (ScoreManager.instance.score_Player1 == 1)
         {
@@ -31,6 +46,7 @@ public class ShowScore : MonoBehaviour
         {
             p2Score[ScoreManager.instance.minigameCount].sprite = first;
             ScoreManager.instance.player2score.Add(2);
+            ScoreManager.instance.p2++;
         }
         else if (ScoreManager.instance.score_Player2 == 1)
         {

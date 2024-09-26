@@ -16,10 +16,9 @@ public class MinigameTimer : MonoBehaviour
 
     void Awake()
     {
-
         counting = true;
         currentTime = maxTime;
-
+        counterUI.color = Color.white;
         SetCounterUIText();
     }
     //
@@ -29,6 +28,11 @@ public class MinigameTimer : MonoBehaviour
         if (counting)
         {
             currentTime -= Time.deltaTime;
+
+            if (currentTime < 10)
+            {
+                counterUI.color = Color.red;
+            }
         }
         SetCounterUIText();
     }
@@ -51,6 +55,7 @@ public class MinigameTimer : MonoBehaviour
 
         if (currentTime <= 0)
         {
+            counterUI.color = Color.white;
             counting = false;
             return true;
         }

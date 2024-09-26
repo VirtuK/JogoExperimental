@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Game/Scenes/Menu.unity
+    guid: b13e44644fb67b3429264f0620c16df4
+  - enabled: 1
     path: Assets/Game/Scenes/SpinningWheel.unity
     guid: 18771565c466745438ee9380752f4a06
   - enabled: 1

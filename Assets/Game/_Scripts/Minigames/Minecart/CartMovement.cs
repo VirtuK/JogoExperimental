@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -49,6 +50,7 @@ public class CartMovement : MonoBehaviour
     public TextMeshProUGUI result;
     Coroutine coroutine;
     public Animator fade;
+    public Image logo;
 
     //---------------------------------------------\\
     void Start()
@@ -81,6 +83,12 @@ public class CartMovement : MonoBehaviour
         {
             playerWin = 2;
             Endgame();
+        }
+        CheckPumpInput();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            coroutine ??= StartCoroutine(LoadMenu());
         }
     }
 
@@ -120,6 +128,7 @@ public class CartMovement : MonoBehaviour
                 timer.enabled = true;
                 playing = true;
                 stopped = false;
+                logo.enabled = false;
             }
             else if (canBreak)
             {
@@ -259,5 +268,11 @@ public class CartMovement : MonoBehaviour
         fade.SetBool("fade", true);
         yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("SpinningWheel");
+    }
+    IEnumerator LoadMenu()
+    {
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(0);
     }
 }

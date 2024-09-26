@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class SpinInput : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class SpinInput : MonoBehaviour
     [SerializeField] Roulette rouletteScript;
     [SerializeField] SpinButtonUI spinUI;
     private bool canSpin = true;
+    public Animator fade;
+    Coroutine coroutine;
 
     //-------------------------------------------\\
 
@@ -30,10 +34,18 @@ public class SpinInput : MonoBehaviour
             canSpin = false;
             StartCoroutine(spinUI.FadeOutText());
         }
+        else if (ScoreManager.instance.minigameCount >= 4)
+        {
+            spinUI.StopAnim();
+        }
 
         if (p1Ready || p2Ready)
         {
             spinUI.StopAnim();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            coroutine ??= StartCoroutine(LoadMenu());
         }
     }
     //
@@ -41,14 +53,21 @@ public class SpinInput : MonoBehaviour
     {
         if (context.performed && !p2Ready)
         {
-            StartCoroutine(spinUI.PressedAnim(2));
+            if (ScoreManager.instance.minigameCount < 4)
+            {
+                StartCoroutine(spinUI.PressedAnim(2));
 
-            spinUI.AddFilling();
-            p2Ready = true;
+                spinUI.AddFilling();
+                p2Ready = true;
 
-            if (!p1Ready) spinUI.FillClockwise(false);
+                if (!p1Ready) spinUI.FillClockwise(false);
 
-            spinUI.FillBar();
+                spinUI.FillBar();
+            }
+            else
+            {
+                coroutine ??= StartCoroutine(Load());
+            }
         }
     }
     //
@@ -63,25 +82,52 @@ public class SpinInput : MonoBehaviour
         {
             if (pumpScript.GetDistance() <= 10f)
             {
-                StartCoroutine(spinUI.PressedAnim(1));
+                if (ScoreManager.instance.minigameCount < 4)
+                {
+                    StartCoroutine(spinUI.PressedAnim(1));
 
-                spinUI.AddFilling();
-                movementStarted = false;
-                p1Ready = true;
+                    spinUI.AddFilling();
+                    movementStarted = false;
+                    p1Ready = true;
 
-                spinUI.FillBar();
+                    spinUI.FillBar();
+                }
+                else
+                {
+                    coroutine ??= StartCoroutine(Load());
+                }
             }
         }
 
         //teste
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            StartCoroutine(spinUI.PressedAnim(1));
+            if (ScoreManager.instance.minigameCount < 4)
+            {
+                StartCoroutine(spinUI.PressedAnim(1));
 
-            spinUI.AddFilling();
-            p1Ready = true;
+                spinUI.AddFilling();
+                p1Ready = true;
 
-            spinUI.FillBar();
+                spinUI.FillBar();
+            }
+            else
+            {
+                coroutine ??= StartCoroutine(Load());
+            }
         }
+    }
+    public IEnumerator Load()
+    {
+        yield return new WaitForSeconds(1f);
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(0);
+    }
+    IEnumerator LoadMenu()
+    {
+        fade.SetBool("fade", true);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(0);
     }
 }

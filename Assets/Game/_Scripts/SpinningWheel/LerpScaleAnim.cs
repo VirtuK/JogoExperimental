@@ -15,7 +15,7 @@ public class LerpScaleAnim : MonoBehaviour
 
     private RectTransform t;
 
-    bool play = false;
+    [SerializeField] bool play = false;
 
     void Start()
     {
