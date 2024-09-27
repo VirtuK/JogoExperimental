@@ -141,7 +141,7 @@ public class BalloonAir : MonoBehaviour
             {
                 balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
 
-                if (airInside > airMin && airInside < airMax)
+                if (airInside >= airMin && airInside < airMax)
                 {
                     result.text = $"player 1 Venceu!";
                     playing = false;
@@ -161,7 +161,7 @@ public class BalloonAir : MonoBehaviour
                 }
             }
         }
-        if ((airInside == airMax - 1 && airInside < airMax) || (airInside <= (airMin + 0.3) && airInside > airMin))
+        if ((airInside >= airMax - 0.5f && airInside < airMax) || (airInside <= (airMin + 0.3) && airInside > airMin))
         {
             balloonAnim.GetComponent<SpriteRenderer>().color = Color.red;
         }
