@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     {
         if (!movementStarted)
         {
-            if (sensor.GetDistance() >= 30) movementStarted = true;
+            if (sensor.GetDistance() >= 20) movementStarted = true;
         }
         else
         {

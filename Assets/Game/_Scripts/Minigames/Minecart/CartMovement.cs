@@ -28,7 +28,7 @@ public class CartMovement : MonoBehaviour
     //---------------------------------------------\\
     [Header("Freio")]
     [SerializeField] float breakPower;
-    private bool canBreak = true;
+    private bool canBreak = false;
     private bool stopped = true;
 
     //---------------------------------------------\\
@@ -61,6 +61,7 @@ public class CartMovement : MonoBehaviour
 
         //comprimento da curva baseado no raio da circunferência
         curvaLength = Mathf.PI * curvaRadius / 2f; // 90 graus
+        timer.enabled = false;
     }
     //
     void FixedUpdate()
@@ -99,7 +100,7 @@ public class CartMovement : MonoBehaviour
         if (!movementStarted)
         {
 
-            if (pumpScript.GetDistance() >= 30f) movementStarted = true;
+            if (pumpScript.GetDistance() >= 20f) movementStarted = true;
         }
         else
         {
@@ -110,7 +111,9 @@ public class CartMovement : MonoBehaviour
                     playing = true;
                     stopped = false;
                     timer.enabled = true;
-		    logo.enabled = false;
+                    logo.enabled = false;
+                    timer.enabled = true;
+                    canBreak = true;
 
                 }
                 else if (canBreak)
@@ -130,6 +133,8 @@ public class CartMovement : MonoBehaviour
                 playing = true;
                 stopped = false;
                 logo.enabled = false;
+                timer.enabled = true;
+                canBreak = true;
             }
             else if (canBreak)
             {

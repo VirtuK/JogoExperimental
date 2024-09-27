@@ -57,7 +57,7 @@ public class BalloonAir : MonoBehaviour
         if (!movementStarted)
         {
 
-            if (sensor.GetDistance() >= 30f) movementStarted = true;
+            if (sensor.GetDistance() >= 20f) movementStarted = true;
         }
         else
         {

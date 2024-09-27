@@ -26,7 +26,7 @@ public class Menu : MonoBehaviour
     {
         if (!movementStarted)
         {
-            if (pumpScript.GetDistance() >= 25f) movementStarted = true;
+            if (pumpScript.GetDistance() >= 20f) movementStarted = true;
         }
 
         else
@@ -67,6 +67,5 @@ public class Menu : MonoBehaviour
         fade.SetBool("fade", true);
         yield return new WaitForSeconds(0.4f);
         if (!Application.isEditor) Application.Quit();
-        else EditorApplication.ExitPlaymode();
     }
 }

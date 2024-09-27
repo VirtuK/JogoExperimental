@@ -75,7 +75,7 @@ public class SpinInput : MonoBehaviour
     {
         if (!movementStarted)
         {
-            if (pumpScript.GetDistance() >= 25f) movementStarted = true;
+            if (pumpScript.GetDistance() >= 20f) movementStarted = true;
         }
 
         else
