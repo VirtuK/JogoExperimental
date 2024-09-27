@@ -18,7 +18,10 @@ public class Pump_SensorDistance : MonoBehaviour
 
         if (ok)
         {
-            if (d > 0) distance = d;
+            if (d > 0)
+            {
+                distance = d;
+            }
         }
         else
         {

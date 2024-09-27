@@ -1164,6 +1164,8 @@ MonoBehaviour:
   minigameCount: -2
   player1score: 
   player2score: 
+  p1: 0
+  p2: 0
 --- !u!4 &1108176045
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,12 +1826,12 @@ MonoBehaviour:
   timer: {fileID: 1578858468}
   balloon: {fileID: 1087453399}
   airInside: 0
-  airLoss: 0.3
+  airLoss: 0.5
   airMin: 4
   airMax: 6.444138
   sensor: {fileID: 684050966}
-  pumpAir: 0.9
-  airToStart: 4.62667
+  pumpAir: 0.5
+  airToStart: 4.3
   lineRendererLeft: {fileID: 1187022510}
   lineRendererRight: {fileID: 1973584128}
   AnchorTopLeft: {fileID: 337343304}
@@ -2087,7 +2089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16dca15a7e476048a2f8e39eb0db3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 170
   holePrefab: {fileID: 1750110841320757899, guid: b2300a0797ada2045b40888bf600c58a, type: 3}
   generatorScript: {fileID: 1800156669}
   balloonScript: {fileID: 1800156670}

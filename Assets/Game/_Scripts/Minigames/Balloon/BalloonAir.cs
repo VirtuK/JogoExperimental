@@ -63,9 +63,8 @@ public class BalloonAir : MonoBehaviour
         {
             if (sensor.GetDistance() <= 10f)
             {
-
-                AddAir();
                 movementStarted = false;
+                AddAir();
             }
         }
 

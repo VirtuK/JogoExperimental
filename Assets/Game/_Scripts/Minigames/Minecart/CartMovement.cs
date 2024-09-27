@@ -106,20 +106,16 @@ public class CartMovement : MonoBehaviour
         {
             if (pumpScript.GetDistance() <= 10f)
             {
-                if (!playing && playerWin == 0)
-                {
-                    playing = true;
-                    stopped = false;
-                    timer.enabled = true;
-                    logo.enabled = false;
-                    timer.enabled = true;
-                    canBreak = true;
+                movementStarted = false;
 
-                }
-                else if (canBreak)
+                if (canBreak)
                 {
                     SlowDown();
-                    movementStarted = false;
+                }
+                else if (!playing && playerWin == 0)
+                {
+                    StartCoroutine(StartMinigame());
+
                 }
             }
         }
@@ -127,18 +123,13 @@ public class CartMovement : MonoBehaviour
         //teste
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (!playing && playerWin == 0)
-            {
-                timer.enabled = true;
-                playing = true;
-                stopped = false;
-                logo.enabled = false;
-                timer.enabled = true;
-                canBreak = true;
-            }
-            else if (canBreak)
+            if (canBreak)
             {
                 SlowDown();
+            }
+            else if (!playing && playerWin == 0)
+            {
+                StartCoroutine(StartMinigame());
             }
         }
     }
@@ -280,5 +271,15 @@ public class CartMovement : MonoBehaviour
         fade.SetBool("fade", true);
         yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene(0);
+    }
+    IEnumerator StartMinigame()
+    {
+        playing = true;
+        timer.enabled = true;
+        logo.enabled = false;
+        timer.enabled = true;
+        stopped = false;
+        yield return new WaitForSeconds(0.1f);
+        canBreak = true;
     }
 }

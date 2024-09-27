@@ -33,6 +33,7 @@ public class Menu : MonoBehaviour
         {
             if (pumpScript.GetDistance() <= 10f)
             {
+                movementStarted = false;
                 coroutine ??= StartCoroutine(Load());
             }
         }

@@ -82,12 +82,12 @@ public class SpinInput : MonoBehaviour
         {
             if (pumpScript.GetDistance() <= 10f)
             {
+                movementStarted = false;
                 if (ScoreManager.instance.minigameCount < 4)
                 {
                     StartCoroutine(spinUI.PressedAnim(1));
 
                     spinUI.AddFilling();
-                    movementStarted = false;
                     p1Ready = true;
 
                     spinUI.FillBar();

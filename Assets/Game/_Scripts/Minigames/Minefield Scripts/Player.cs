@@ -50,8 +50,8 @@ public class Player : MonoBehaviour
         {
             if (sensor.GetDistance() <= 10)
             {
-                movePlayer();
                 movementStarted = false;
+                if (!logo.enabled) movePlayer();
                 logo.enabled = false;
             }
         }
