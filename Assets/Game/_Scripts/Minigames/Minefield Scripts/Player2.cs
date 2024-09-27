@@ -201,8 +201,8 @@ public class Player2 : MonoBehaviour
         index = bombIndex;
         timer = true;
         GameObject newPos = grid.paths[player.positionIndex];
-
-        if (newPos.name == "Bomb")
+        Transform bombPos = grid.bombPosition[bombIndex];
+        if (newPos.name == bombPos.gameObject.name)
         {
             player.canMove = false;
         }
@@ -212,12 +212,14 @@ public class Player2 : MonoBehaviour
     {
         GameObject newPos = grid.paths[player.positionIndex];
 
-        if (newPos.name == "Bomb")
+        Transform bombPos = grid.bombPosition[bombIndex];
+        if (newPos.name == bombPos.gameObject.name)
         {
             result.text = $"player 2 Venceu!";
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
             coroutine ??= StartCoroutine(LoadRoulette());
+            bombPos.gameObject.name = "Path";
         }
         Destroy(grid.bombList[bombIndex]);
         grid.bombList.Remove(grid.bombList[bombIndex]);

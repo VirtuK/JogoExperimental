@@ -16,6 +16,7 @@ public class Grid : MonoBehaviour
     public List<Vector3> pathPosition = new List<Vector3>();
     public List<Vector3> walkPosition = new List<Vector3>();
     public List<GameObject> bombList = new List<GameObject>();
+    public List<Transform> bombPosition = new List<Transform>();
     public Transform cam;
     public GameObject player;
     public Vector3 start;
@@ -160,12 +161,13 @@ public class Grid : MonoBehaviour
         {
             int bombPosIndex = Random.Range(0, pathPosition.Count - 1);
             Vector3 bombPos = pathPosition[bombPosIndex];
-            paths[bombPosIndex].name = "Bomb";
+            paths[bombPosIndex].name = "Bomb" + i;
             GameObject newBomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
             newBomb.transform.SetParent(bombs.transform);
             newBomb.GetComponent<Animator>().SetInteger("bomb", i);
             newBomb.transform.position = new Vector3(bombPos.x, bombPos.y, -0.2f);
             bombList.Add(newBomb);
+            bombPosition.Add(paths[bombPosIndex].transform);
             pathPosition.Remove(pathPosition[bombPosIndex]);
         }
     }
