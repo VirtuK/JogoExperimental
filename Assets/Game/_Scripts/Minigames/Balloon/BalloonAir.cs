@@ -108,7 +108,7 @@ public class BalloonAir : MonoBehaviour
                 }
 
             }
-            else if (airInside >= airMax)
+            else if (airInside > airMax)
             {
                 balloonAnim.GetComponent<SpriteRenderer>().color = Color.white;
                 balloonAnim.SetBool("explode", true);
@@ -161,7 +161,7 @@ public class BalloonAir : MonoBehaviour
                 }
             }
         }
-        if ((airInside >= (airMax - 1) && airInside < airMax) || (airInside <= (airMin + 0.3) && airInside > airMin))
+        if ((airInside == airMax - 1 && airInside < airMax) || (airInside <= (airMin + 0.3) && airInside > airMin))
         {
             balloonAnim.GetComponent<SpriteRenderer>().color = Color.red;
         }

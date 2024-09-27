@@ -1019,6 +1019,8 @@ MonoBehaviour:
   minigameCount: -2
   player1score: 
   player2score: 
+  p1: 0
+  p2: 0
 --- !u!4 &363269554
 Transform:
   m_ObjectHideFlags: 0
@@ -4572,7 +4574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 3
-  minSpeed: 0.1
+  minSpeed: 0.3
   curvaRadius: 1.3
   curve: 0
   breakPower: 0.3
