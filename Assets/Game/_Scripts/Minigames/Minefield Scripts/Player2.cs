@@ -187,7 +187,7 @@ public class Player2 : MonoBehaviour
                 if (lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
                 {
                     bombAnimation(i);
-                    bombCodes.Remove(bombCodes[i]);
+                    //bombCodes.Remove(bombCodes[i]);
                 }
             }
         }
@@ -200,19 +200,16 @@ public class Player2 : MonoBehaviour
             grid.bombList[bombIndex].GetComponent<SpriteRenderer>().color.r, grid.bombList[bombIndex].GetComponent<SpriteRenderer>().color.b, 255);
         index = bombIndex;
         timer = true;
-        GameObject newPos = grid.paths[player.positionIndex];
-        Transform bombPos = grid.bombPosition[bombIndex];
-        if (newPos.name == bombPos.gameObject.name)
-        {
-            player.canMove = false;
-        }
+        player.canMove = false;
     }
 
     void DetonateBomb(int bombIndex)
     {
-        GameObject newPos = grid.paths[player.positionIndex];
+        GameObject newPos = grid.gridPosition[player.actualPositionX][player.actualPositionY];
 
         Transform bombPos = grid.bombPosition[bombIndex];
+        print(newPos.name + "Player");
+        print(bombPos.name + "Bomb");
         if (newPos.name == bombPos.gameObject.name)
         {
             result.text = $"player 2 Venceu!";
@@ -221,8 +218,13 @@ public class Player2 : MonoBehaviour
             coroutine ??= StartCoroutine(LoadRoulette());
             bombPos.gameObject.name = "Path";
         }
-        Destroy(grid.bombList[bombIndex]);
-        grid.bombList.Remove(grid.bombList[bombIndex]);
+        else
+        {
+            player.canMove = true;
+            bombPos.gameObject.name = "Path";
+        }
+        grid.bombList[bombIndex].SetActive(false);
+        //grid.bombList.Remove(grid.bombList[bombIndex]);
 
     }
 

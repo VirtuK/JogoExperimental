@@ -163,12 +163,14 @@ public class Grid : MonoBehaviour
             Vector3 bombPos = pathPosition[bombPosIndex];
             paths[bombPosIndex].name = "Bomb" + i;
             GameObject newBomb = Instantiate(bombPrefab, bombPos, Quaternion.identity);
+            newBomb.name = "Bomb" + i;
             newBomb.transform.SetParent(bombs.transform);
             newBomb.GetComponent<Animator>().SetInteger("bomb", i);
             newBomb.transform.position = new Vector3(bombPos.x, bombPos.y, -0.2f);
             bombList.Add(newBomb);
             bombPosition.Add(paths[bombPosIndex].transform);
             pathPosition.Remove(pathPosition[bombPosIndex]);
+            paths.Remove(paths[bombPosIndex]);
         }
     }
 }
