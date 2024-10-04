@@ -8,6 +8,7 @@ public class LoadMinigame : MonoBehaviour
     //--------
     bool counting = false;
     float currentTime = 0;
+    bool go = false;
     //---------------------------------\\
 
     void Update()
@@ -16,7 +17,7 @@ public class LoadMinigame : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
 
-            if (currentTime < 0f)
+            if (currentTime < 0f && go)
             {
                 fade.SetTrigger("fadeOut");
             }
@@ -26,7 +27,6 @@ public class LoadMinigame : MonoBehaviour
     public void GoToMinigame(int index)
     {
         currentTime = timer;
-        counting = true;
 
         switch (index)
         {
@@ -34,11 +34,19 @@ public class LoadMinigame : MonoBehaviour
                 LoadScene.sceneToLoad = "Balloon";
                 break;
             case 1:
-                LoadScene.sceneToLoad = "Minefield";
-                break;
-            case 2:
                 LoadScene.sceneToLoad = "Minecart";
                 break;
+            case 2:
+                LoadScene.sceneToLoad = "Minefield";
+                break;
         }
+
+        counting = true;
+        go = true;
+    }
+    public void DontGoToMinigame()
+    {
+        go = false;
+        counting = false;
     }
 }

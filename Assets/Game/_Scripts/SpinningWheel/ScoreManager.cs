@@ -8,6 +8,7 @@ public class ScoreManager : MonoBehaviour
     public int score_Player1;
     public int score_Player2;
     public int minigameCount = -1;
+    public int lastMinigameIndex = 10;
     public List<int> player1score;
     public List<int> player2score;
     public int p1 = 0, p2 = 0;

@@ -1030,6 +1030,7 @@ MonoBehaviour:
   score_Player1: 0
   score_Player2: 0
   minigameCount: -2
+  lastMinigameIndex: 10
   player1score: 
   player2score: 
   p1: 0
@@ -4588,7 +4589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   minSpeed: 0.3
-  curvaRadius: 1.3
+  curvaRadius: 1.6
   curve: 0
   breakPower: 0.3
   cooldownTime: 3

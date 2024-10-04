@@ -1162,6 +1162,7 @@ MonoBehaviour:
   score_Player1: 0
   score_Player2: 0
   minigameCount: -2
+  lastMinigameIndex: 10
   player1score: 
   player2score: 
   p1: 0
@@ -1839,7 +1840,7 @@ MonoBehaviour:
   timer: {fileID: 1578858468}
   balloon: {fileID: 1087453399}
   airInside: 0
-  airLoss: 0.5
+  airLoss: 0.2
   airMin: 4
   airMax: 6.444138
   sensor: {fileID: 684050966}
@@ -2102,7 +2103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16dca15a7e476048a2f8e39eb0db3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 170
+  speed: 90
   holePrefab: {fileID: 1750110841320757899, guid: b2300a0797ada2045b40888bf600c58a, type: 3}
   generatorScript: {fileID: 1800156669}
   balloonScript: {fileID: 1800156670}
@@ -2148,26 +2149,18 @@ MonoBehaviour:
     m_ActionId: 715c9b16-1cd7-4731-808b-a6969b983b13
     m_ActionName: Player2/Action[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1969122687}
-        m_TargetAssemblyTypeName: HoleShooter, Assembly-CSharp
-        m_MethodName: OnLeftStick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 15c261f7-accb-4d28-96f0-b3cff455b2be
     m_ActionName: Player2/LeftStick[/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b48ce84-9e39-47a5-a5dd-9afc384a389c
+    m_ActionName: Player2/RightStick[/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1969122687}
         m_TargetAssemblyTypeName: HoleShooter, Assembly-CSharp
-        m_MethodName: OnRightStick
+        m_MethodName: OnAim
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2177,8 +2170,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 6b48ce84-9e39-47a5-a5dd-9afc384a389c
-    m_ActionName: Player2/RightStick[/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down]
+    m_ActionId: dd9b391d-b67f-4666-a341-17218d6de4e8
+    m_ActionName: Player2/Aim[/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down,/DualShock4GamepadHID/rightStick/left,/DualShock4GamepadHID/rightStick/right,/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player2

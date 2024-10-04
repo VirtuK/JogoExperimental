@@ -17,6 +17,8 @@ public class SpinInput : MonoBehaviour
     [SerializeField] SpinButtonUI spinUI;
     private bool canSpin = true;
     public Animator fade;
+    public Animator buttonAnim;
+    public Animator[] textAnim;
 
     //-------------------------------------------\\
 
@@ -28,16 +30,14 @@ public class SpinInput : MonoBehaviour
         {
             rouletteScript.Spin();
             canSpin = false;
+            textAnim[0].SetTrigger("fade");
+            textAnim[1].SetTrigger("fade");
         }
 
-        /*else if (ScoreManager.instance.minigameCount >= 4)
+        if (ScoreManager.instance.minigameCount > 3 || p1Ready && p2Ready)
         {
+            buttonAnim.SetTrigger("stop");
         }
-
-        if (p1Ready || p2Ready)
-        {
-        }
-        */
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -58,6 +58,7 @@ public class SpinInput : MonoBehaviour
                 if (!p1Ready) spinUI.FillClockwise(false);
 
                 spinUI.FillBar();
+                textAnim[1].SetTrigger("pulse");
             }
             else
             {
@@ -84,6 +85,7 @@ public class SpinInput : MonoBehaviour
                     p1Ready = true;
 
                     spinUI.FillBar();
+                    textAnim[0].SetTrigger("pulse");
                 }
                 else
                 {
@@ -101,6 +103,7 @@ public class SpinInput : MonoBehaviour
                 p1Ready = true;
 
                 spinUI.FillBar();
+                textAnim[0].SetTrigger("pulse");
             }
             else
             {

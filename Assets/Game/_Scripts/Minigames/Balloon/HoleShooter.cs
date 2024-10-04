@@ -31,14 +31,9 @@ public class HoleShooter : MonoBehaviour
     }
     //---------------------------------------------\\
 
-    public void OnLeftStick(InputAction.CallbackContext context)
+    public void OnAim(InputAction.CallbackContext context)
     {
-        input = new(input.x, Mathf.RoundToInt(context.ReadValue<float>()));
-    }
-    //
-    public void OnRightStick(InputAction.CallbackContext context)
-    {
-        input = new(Mathf.RoundToInt(context.ReadValue<float>()), input.y);
+        input = context.ReadValue<Vector2>();
     }
     //
     public void OnAction(InputAction.CallbackContext context)

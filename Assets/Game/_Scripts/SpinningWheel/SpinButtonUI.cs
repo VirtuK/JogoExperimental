@@ -14,7 +14,6 @@ public class SpinButtonUI : MonoBehaviour
     //-------------------------------------------\\
     [SerializeField] TextMeshProUGUI p1Text, p2Text;
     [SerializeField] Image spinButton;
-
     //-------------------------------------------\\
 
     public void FillBar()

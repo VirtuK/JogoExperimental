@@ -1,32 +1,21 @@
+using System.Collections;
 using UnityEngine;
 //---------------------------------------------\\
-[System.Serializable]
-public struct MinMax
-{
-    public float min;
-    public float max;
-}
-//---------------------------------------------\\
-
 public class Roulette : MonoBehaviour
 {
-    [Header("Velocidade")]
-    [SerializeField][Range(0f, 20f)] float maxSpeed;
-    [SerializeField] private MinMax accelerationDuration, decelerationDuration;
-
-    //---------------------------------------------\\
-    //"lerp"
-    float speed = 0f;
-    private float accelerationD_Current;
-    private float decelerationD_Current;
-    float currentTime;
-
-    //---------------------------------------------\\
     private bool spinning = false;
-    private float rotation = 0f;
+    private int minigameIndex = 0;
+
+    //---------------------------------------------\\
+    private float targetRotation;
+    private float currentRotation = 0f;
+    //
+    Coroutine coroutine;
     //
     [SerializeField] LoadMinigame loadMinigame;
-    //[SerializeField] Animator[] icons;
+    //
+    [SerializeField] Animator[] icons;
+
 
     //---------------------------------------------\\
 
@@ -34,53 +23,65 @@ public class Roulette : MonoBehaviour
     {
         if (spinning)
         {
-            SetRotation();
-        }
-    }
-    //
-    void SetRotation()
-    {
-        if (currentTime < accelerationD_Current)
-        {
-            float t = currentTime / accelerationD_Current;
-            speed = Mathf.SmoothStep(0f, maxSpeed, t);
-        }
-        else if (currentTime < accelerationD_Current + decelerationD_Current)
-        {
-            float decelTime = currentTime - accelerationD_Current;
-            speed = Mathf.SmoothStep(maxSpeed, 0f, decelTime / decelerationD_Current);
+            coroutine ??= StartCoroutine(SetRotation());
         }
         else
         {
-            speed = 0;
-            spinning = false;
-
-            loadMinigame.GoToMinigame(GetIndex());
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                loadMinigame.DontGoToMinigame();
+                Spin();
+            }
         }
-
-        rotation += 100 * Time.deltaTime * speed;
-        transform.localRotation = Quaternion.Euler(0f, 0f, rotation);
-
-        currentTime += Time.deltaTime;
     }
     //
-    public int GetIndex()
+    IEnumerator SetRotation()
     {
-        float rotationZ = transform.localEulerAngles.z % 360;
-        float slice = rotationZ / 60f;
+        float elapsedTime = 0f;
+        float startRotation = currentRotation;
 
-        int minigameIndex = Mathf.RoundToInt(slice) % 6;
+        while (elapsedTime < 5f)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / 5f;
 
-        //icons[minigameIndex].SetBool;
+            //t = t * t * (3f - 2f * t); //ease inout quad
+            t = Mathf.Pow(t, 2) * (3f - 2f * t); //intensifica
 
-        return minigameIndex % 3;
+            currentRotation = Mathf.Lerp(startRotation, targetRotation, t);
+            transform.localRotation = Quaternion.Euler(0f, 0f, currentRotation);
+            yield return null;
+
+        }
+
+        currentRotation = targetRotation;
+        transform.localRotation = Quaternion.Euler(0f, 0f, currentRotation);
+
+        spinning = false;
+
+        icons[minigameIndex].SetTrigger("pulse");
+        loadMinigame.GoToMinigame(minigameIndex % 3);
+
+        coroutine = null;
     }
     //
     public void Spin()
     {
+        minigameIndex = Random.Range(0, 6);
+
+        while (minigameIndex % 3 == ScoreManager.instance.lastMinigameIndex)
+        {
+            minigameIndex = Random.Range(0, 6);
+        }
+
+        ScoreManager.instance.lastMinigameIndex = minigameIndex % 3;
+
+        targetRotation = 60 * minigameIndex;
+        targetRotation += 360 * 7;
+        targetRotation = -targetRotation;
+
+        currentRotation = transform.localEulerAngles.z;
+
         spinning = true;
-        accelerationD_Current = Mathf.Round(Random.Range(accelerationDuration.min, accelerationDuration.max));
-        decelerationD_Current = Mathf.Round(Random.Range(decelerationDuration.min, decelerationDuration.max));
-        currentTime = 0f;
     }
 }
