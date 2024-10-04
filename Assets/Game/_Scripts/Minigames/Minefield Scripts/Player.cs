@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
@@ -21,7 +18,6 @@ public class Player : MonoBehaviour
     bool movementStarted;
 
     public TextMeshProUGUI result;
-    Coroutine coroutine;
     public Animator fade;
     public Image logo;
     void Start()
@@ -36,7 +32,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            coroutine ??= StartCoroutine(LoadMenu());
+            LoadRoulette();
+        }
+
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
         }
     }
 
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
                 logo.enabled = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.P) && canMove)
+        if (Input.GetKeyDown(KeyCode.Return) && canMove)
         {
             if (!logo.enabled) movePlayer();
             else logo.enabled = false;
@@ -95,23 +96,11 @@ public class Player : MonoBehaviour
                 result.text = $"player 1 Venceu!";
                 ScoreManager.instance.score_Player1 = 2;
                 ScoreManager.instance.score_Player2 = 1;
-                coroutine ??= StartCoroutine(LoadRoulette());
+                LoadRoulette();
             }
         }
     }
-    IEnumerator LoadRoulette()
-    {
-        yield return new WaitForSeconds(2f);
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("SpinningWheel");
-    }
-    IEnumerator LoadMenu()
-    {
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene(0);
-    }
+
     void checkAnimation()
     {
         if (actualPositionX - 1 > -1 && actualPositionX + 1 < 9 && actualPositionY - 1 > -1 && actualPositionY + 1 < 9)
@@ -148,5 +137,17 @@ public class Player : MonoBehaviour
                 animator.SetBool("left", false);
             }
         }
+    }
+    //
+    void LoadRoulette()
+    {
+        LoadScene.sceneToLoad = "SpinningWheel";
+        fade.SetTrigger("fadeOut");
+    }
+    //
+    void Reset()
+    {
+        LoadScene.sceneToLoad = "Minefield";
+        fade.SetTrigger("fadeOut");
     }
 }

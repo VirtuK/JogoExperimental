@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
-using System.Collections;
 using UnityEngine.UI;
 
 public class BalloonAir : MonoBehaviour
@@ -36,52 +34,19 @@ public class BalloonAir : MonoBehaviour
     private bool movementStarted;
     //
     public TextMeshProUGUI result;
-    Coroutine coroutine;
     public Animator fade;
     public Image logo;
     public Animator balloonAnim;
     public GameObject balloonbottom, seat;
+    //---------------------------------------------\\
 
     private void Start()
     {
         targetScript = GetComponent<TargetGenerator>();
         timer.enabled = false;
         airInside = airMin;
-
-    }
-
-
-    void CheckPumpInput()
-    {
-
-        if (!movementStarted)
-        {
-
-            if (sensor.GetDistance() >= 20f) movementStarted = true;
-        }
-        else
-        {
-            if (sensor.GetDistance() <= 10f)
-            {
-                movementStarted = false;
-                AddAir();
-            }
-        }
-
-        //teste
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            AddAir();
-        }
     }
     //
-
-    private void AddAir()
-    {
-        airInside += pumpAir;
-
-    }
-
     private void Update()
     {
         lineRendererLeft.SetPosition(0, AnchorBottomLeft.position);
@@ -123,7 +88,7 @@ public class BalloonAir : MonoBehaviour
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                coroutine ??= StartCoroutine(LoadRoulette());
+                LoadRoulette();
             }
 
             else if (airInside < airMin && started)
@@ -134,7 +99,7 @@ public class BalloonAir : MonoBehaviour
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                coroutine ??= StartCoroutine(LoadRoulette());
+                LoadRoulette();
             }
 
             if (playing && timer.TimeUp())
@@ -148,7 +113,7 @@ public class BalloonAir : MonoBehaviour
                     timer.StopTimer();
                     ScoreManager.instance.score_Player1 = 2;
                     ScoreManager.instance.score_Player2 = 1;
-                    coroutine ??= StartCoroutine(LoadRoulette());
+                    LoadRoulette();
                 }
                 else
                 {
@@ -157,7 +122,7 @@ public class BalloonAir : MonoBehaviour
                     timer.StopTimer();
                     ScoreManager.instance.score_Player1 = 1;
                     ScoreManager.instance.score_Player2 = 2;
-                    coroutine ??= StartCoroutine(LoadRoulette());
+                    LoadRoulette();
                 }
             }
         }
@@ -171,20 +136,50 @@ public class BalloonAir : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            coroutine ??= StartCoroutine(LoadMenu());
+            LoadRoulette();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
         }
     }
-    IEnumerator LoadRoulette()
+    //
+    void CheckPumpInput()
     {
-        yield return new WaitForSeconds(2f);
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("SpinningWheel");
+        if (!movementStarted)
+        {
+            if (sensor.GetDistance() >= 20f) movementStarted = true;
+        }
+        else
+        {
+            if (sensor.GetDistance() <= 10f)
+            {
+                movementStarted = false;
+                AddAir();
+            }
+        }
+
+        //teste
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            AddAir();
+        }
     }
-    IEnumerator LoadMenu()
+    //
+    private void AddAir()
     {
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene(0);
+        airInside += pumpAir;
+    }
+    //
+    void LoadRoulette()
+    {
+        LoadScene.sceneToLoad = "SpinningWheel";
+        fade.SetTrigger("fadeOut");
+    }
+    //
+    void Reset()
+    {
+        LoadScene.sceneToLoad = "Balloon";
+        fade.SetTrigger("fadeOut");
     }
 }

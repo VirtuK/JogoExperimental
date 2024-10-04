@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player2 : MonoBehaviour
@@ -28,7 +26,6 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
 
     public TextMeshProUGUI result;
-    Coroutine coroutine;
     public Animator fade;
 
     public void OnLeftStick(InputAction.CallbackContext context)
@@ -215,7 +212,7 @@ public class Player2 : MonoBehaviour
             result.text = $"player 2 Venceu!";
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
-            coroutine ??= StartCoroutine(LoadRoulette());
+            LoadRoulette();
             bombPos.gameObject.name = "Path";
         }
         else
@@ -228,11 +225,9 @@ public class Player2 : MonoBehaviour
 
     }
 
-    IEnumerator LoadRoulette()
+    void LoadRoulette()
     {
-        yield return new WaitForSeconds(2f);
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("SpinningWheel");
+        LoadScene.sceneToLoad = "SpinningWheel";
+        fade.SetTrigger("fadeOut");
     }
 }

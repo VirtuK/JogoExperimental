@@ -14,11 +14,9 @@ public class ShowScore : MonoBehaviour
 
     void Start()
     {
-        ScoreManager.instance.minigameCount++;
-        if (ScoreManager.instance.minigameCount >= 0) checkScore();
+        checkScore();
 
-
-        if (ScoreManager.instance.minigameCount >= 4)
+        if (ScoreManager.instance.minigameCount > 3)
         {
             enabled = true;
             victory.SetActive(true);
@@ -33,12 +31,14 @@ public class ShowScore : MonoBehaviour
     {
         if (ScoreManager.instance.score_Player1 == 2)
         {
+            ScoreManager.instance.minigameCount++;
             p1Score[ScoreManager.instance.minigameCount].sprite = first;
             ScoreManager.instance.player1score.Add(2);
             ScoreManager.instance.p1++;
         }
         else if (ScoreManager.instance.score_Player1 == 1)
         {
+            ScoreManager.instance.minigameCount++;
             p1Score[ScoreManager.instance.minigameCount].sprite = second;
             ScoreManager.instance.player1score.Add(1);
         }

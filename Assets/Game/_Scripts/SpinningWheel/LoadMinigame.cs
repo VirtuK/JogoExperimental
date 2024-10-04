@@ -1,34 +1,43 @@
-using System.Collections;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class LoadMinigame : MonoBehaviour
 {
     public Animator fade;
+    public float timer;
 
-    public IEnumerator Timer(int index)
+    //--------
+    bool counting = false;
+    float currentTime = 0;
+    //---------------------------------\\
+
+    void Update()
     {
-        float currentTime = 2f;
-
-        while (currentTime > 0f)
+        if (counting)
         {
-            yield return new WaitForSeconds(1f);
-            currentTime--;
-        }
+            currentTime -= Time.deltaTime;
 
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
+            if (currentTime < 0f)
+            {
+                fade.SetTrigger("fadeOut");
+            }
+        }
+    }
+    //
+    public void GoToMinigame(int index)
+    {
+        currentTime = timer;
+        counting = true;
 
         switch (index)
         {
             case 0:
-                SceneManager.LoadScene("Balloon");
+                LoadScene.sceneToLoad = "Balloon";
                 break;
             case 1:
-                SceneManager.LoadScene("Minefield");
+                LoadScene.sceneToLoad = "Minefield";
                 break;
             case 2:
-                SceneManager.LoadScene("Minecart");
+                LoadScene.sceneToLoad = "Minecart";
                 break;
         }
     }

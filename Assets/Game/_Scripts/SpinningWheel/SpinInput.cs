@@ -1,8 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-
 public class SpinInput : MonoBehaviour
 {
     //-------------------------------------------\\
@@ -20,7 +17,6 @@ public class SpinInput : MonoBehaviour
     [SerializeField] SpinButtonUI spinUI;
     private bool canSpin = true;
     public Animator fade;
-    Coroutine coroutine;
 
     //-------------------------------------------\\
 
@@ -32,20 +28,20 @@ public class SpinInput : MonoBehaviour
         {
             rouletteScript.Spin();
             canSpin = false;
-            StartCoroutine(spinUI.FadeOutText());
         }
-        else if (ScoreManager.instance.minigameCount >= 4)
+
+        /*else if (ScoreManager.instance.minigameCount >= 4)
         {
-            spinUI.StopAnim();
         }
 
         if (p1Ready || p2Ready)
         {
-            spinUI.StopAnim();
         }
+        */
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            coroutine ??= StartCoroutine(LoadMenu());
+            MainMenu();
         }
     }
     //
@@ -55,7 +51,6 @@ public class SpinInput : MonoBehaviour
         {
             if (ScoreManager.instance.minigameCount < 4)
             {
-                StartCoroutine(spinUI.PressedAnim(2));
 
                 spinUI.AddFilling();
                 p2Ready = true;
@@ -66,7 +61,7 @@ public class SpinInput : MonoBehaviour
             }
             else
             {
-                coroutine ??= StartCoroutine(Load());
+                MainMenu();
             }
         }
     }
@@ -85,8 +80,6 @@ public class SpinInput : MonoBehaviour
                 movementStarted = false;
                 if (ScoreManager.instance.minigameCount < 4)
                 {
-                    StartCoroutine(spinUI.PressedAnim(1));
-
                     spinUI.AddFilling();
                     p1Ready = true;
 
@@ -94,7 +87,7 @@ public class SpinInput : MonoBehaviour
                 }
                 else
                 {
-                    coroutine ??= StartCoroutine(Load());
+                    MainMenu();
                 }
             }
         }
@@ -104,8 +97,6 @@ public class SpinInput : MonoBehaviour
         {
             if (ScoreManager.instance.minigameCount < 4)
             {
-                StartCoroutine(spinUI.PressedAnim(1));
-
                 spinUI.AddFilling();
                 p1Ready = true;
 
@@ -113,21 +104,13 @@ public class SpinInput : MonoBehaviour
             }
             else
             {
-                coroutine ??= StartCoroutine(Load());
+                MainMenu();
             }
         }
     }
-    public IEnumerator Load()
+    void MainMenu()
     {
-        yield return new WaitForSeconds(1f);
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene(0);
-    }
-    IEnumerator LoadMenu()
-    {
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene(0);
+        LoadScene.sceneToLoad = "Menu";
+        fade.SetTrigger("fadeOut");
     }
 }

@@ -90,31 +90,42 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "c9c356d8-e343-4c98-a71b-7c0f6cad3c83",
-                    "path": "<Gamepad>/leftStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LeftStick",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "51b8215a-9185-4a7d-900a-541e800efa6d",
-                    "path": "<Gamepad>/leftStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LeftStick",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "negative",
                     "id": "04b11e1d-c0cf-4f04-8ca7-4a9fe62ead4d",
                     "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis Keyboard",
+                    "id": "68d5a2b6-3bfb-495f-bb0d-9f7ffee9f0cf",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStick",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "7084c29f-91cc-4b2b-b96a-d47a9cf5a2fb",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStick",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "aaf76b48-7634-4b58-9eaf-1c87f3a30963",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -189,9 +200,20 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "1D Axis Keyboard",
+                    "id": "8fc6773d-2af8-4e09-b15e-d73d01c80658",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStick",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "positive",
-                    "id": "c2d2ecdd-27b1-4c53-8684-2164e10c34f2",
-                    "path": "<Gamepad>/rightStick/up",
+                    "id": "6beb23e4-7a59-4e47-b099-4ac5b64b1a50",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -201,8 +223,8 @@
                 },
                 {
                     "name": "negative",
-                    "id": "85a26804-d591-4159-8279-79ec57cb6217",
-                    "path": "<Gamepad>/rightStick/down",
+                    "id": "a81cefd6-0221-4fb1-b4c7-a32454d4e5af",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

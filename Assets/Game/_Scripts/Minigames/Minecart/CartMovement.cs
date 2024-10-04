@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CartMovement : MonoBehaviour
@@ -48,7 +47,6 @@ public class CartMovement : MonoBehaviour
     public int playerWin = 0;
     private bool playing = false;
     public TextMeshProUGUI result;
-    Coroutine coroutine;
     public Animator fade;
     public Image logo;
 
@@ -89,7 +87,11 @@ public class CartMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            coroutine ??= StartCoroutine(LoadMenu());
+            LoadRoulette();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
         }
     }
 
@@ -187,7 +189,7 @@ public class CartMovement : MonoBehaviour
 
         result.text = $"player {playerWin} Venceu!";
 
-        coroutine ??= StartCoroutine(LoadRoulette());
+        LoadRoulette();
     }
     //---------------------------------------------\\
     private void OnTriggerEnter2D(Collider2D other)
@@ -259,19 +261,18 @@ public class CartMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, 0f, rotation);
     }
     //
-    IEnumerator LoadRoulette()
+    void LoadRoulette()
     {
-        yield return new WaitForSeconds(2f);
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene("SpinningWheel");
+        LoadScene.sceneToLoad = "SpinningWheel";
+        fade.SetTrigger("fadeOut");
     }
-    IEnumerator LoadMenu()
+    //
+    void Reset()
     {
-        fade.SetBool("fade", true);
-        yield return new WaitForSeconds(0.4f);
-        SceneManager.LoadScene(0);
+        LoadScene.sceneToLoad = "Minecart";
+        fade.SetTrigger("fadeOut");
     }
+    //
     IEnumerator StartMinigame()
     {
         playing = true;
