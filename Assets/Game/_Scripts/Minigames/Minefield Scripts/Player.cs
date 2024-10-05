@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI result;
     public Animator fade;
     public Image logo;
+
+    public TutorialMinefield tutorial;
+    Coroutine sceneCoroutine;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,7 +36,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LoadRoulette();
+            sceneCoroutine ??= StartCoroutine(LoadRoulette(false));
         }
 
         else if (Input.GetKeyDown(KeyCode.R))
@@ -49,14 +53,14 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (sensor.GetDistance() <= 10 && canMove)
+            if (sensor.GetDistance() <= 10 && canMove && !tutorial.tutorial)
             {
                 movementStarted = false;
                 if (!logo.enabled) movePlayer();
                 logo.enabled = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Return) && canMove)
+        if (Input.GetKeyDown(KeyCode.Return) && canMove && !tutorial.tutorial)
         {
             if (!logo.enabled) movePlayer();
             else logo.enabled = false;
@@ -96,7 +100,7 @@ public class Player : MonoBehaviour
                 result.text = $"player 1 Venceu!";
                 ScoreManager.instance.score_Player1 = 2;
                 ScoreManager.instance.score_Player2 = 1;
-                LoadRoulette();
+                sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
             }
         }
     }
@@ -139,8 +143,9 @@ public class Player : MonoBehaviour
         }
     }
     //
-    void LoadRoulette()
+    IEnumerator LoadRoulette(bool wait)
     {
+        if (wait) yield return new WaitForSeconds(2f);
         LoadScene.sceneToLoad = "SpinningWheel";
         fade.SetTrigger("fadeOut");
     }

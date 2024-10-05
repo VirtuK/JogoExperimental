@@ -352,17 +352,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""32e15a0e-f63f-459b-9bc6-475ab93084c3"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Aim"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""LeftStick"",
                     ""id"": ""e61077cf-b05c-4610-be8a-c8c06a9a443f"",
                     ""path"": ""2DVector"",
@@ -418,9 +407,31 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""2af9d79e-9fbd-45bc-8c2b-c3eda1df2de2"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d2f65437-ae0e-4980-9655-02c7c4fb52a6"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""down"",
-                    ""id"": ""c46bbf17-6a26-46e1-9c14-20ff7e2883fa"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""id"": ""1c13ed97-ff74-4b74-9c92-0dfffcf60f1e"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -430,8 +441,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""312bda48-3bcc-45d7-8ccb-d38a050e0556"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""id"": ""1ebe56da-96f1-4f2e-b10c-05aab871e373"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -441,8 +452,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""6ce9714b-7b67-494a-8da9-6f1d289d1229"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""id"": ""47c28649-3db7-499f-9a27-e386d8821456"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

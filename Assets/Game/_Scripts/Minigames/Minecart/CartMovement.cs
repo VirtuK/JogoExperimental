@@ -23,6 +23,8 @@ public class CartMovement : MonoBehaviour
     private float curvaLength; // Comprimento da curva baseado no raio
     private float curvaDistanceTraveled; // Distância percorrida na curva
     public bool curve = false;
+    public bool deathCurve = false;
+    public bool canFollow = true;
 
     //---------------------------------------------\\
     [Header("Freio")]
@@ -49,6 +51,8 @@ public class CartMovement : MonoBehaviour
     public TextMeshProUGUI result;
     public Animator fade;
     public Image logo;
+    public TutorialCart tutorial;
+    Coroutine sceneCoroutine;
 
     //---------------------------------------------\\
     void Start()
@@ -87,7 +91,7 @@ public class CartMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LoadRoulette();
+            sceneCoroutine ??= StartCoroutine(LoadRoulette(false));
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -116,7 +120,7 @@ public class CartMovement : MonoBehaviour
                 }
                 else if (!playing && playerWin == 0)
                 {
-                    StartCoroutine(StartMinigame());
+                    if (!tutorial.tutorial) StartCoroutine(StartMinigame());
 
                 }
             }
@@ -131,7 +135,7 @@ public class CartMovement : MonoBehaviour
             }
             else if (!playing && playerWin == 0)
             {
-                StartCoroutine(StartMinigame());
+                if (!tutorial.tutorial) StartCoroutine(StartMinigame());
             }
         }
     }
@@ -157,7 +161,7 @@ public class CartMovement : MonoBehaviour
     //
     void Cooldown()
     {
-        if (coolElapsedTime >= cooldownTime)
+        if (coolElapsedTime >= cooldownTime && playerWin == 0)
         {
             speed = maxSpeed;
             stopped = false;
@@ -189,13 +193,22 @@ public class CartMovement : MonoBehaviour
 
         result.text = $"player {playerWin} Venceu!";
 
-        LoadRoulette();
+        sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
     }
     //---------------------------------------------\\
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("CurveCheck"))
+        {
+            canFollow = false;
+        }
+
         if (other.CompareTag("RailwayCurve"))
         {
+            if (other.GetComponent<SpriteRenderer>().color != Color.white && canFollow)
+            {
+                deathCurve = true;
+            }
 
             if (curve)
             {
@@ -205,6 +218,7 @@ public class CartMovement : MonoBehaviour
             startRotation = transform.localEulerAngles.z;
             targetRotation = SetDirection(other.transform);
             curvaDistanceTraveled = 0f;
+            canFollow = true;
             curve = true;
 
             other.enabled = false;
@@ -261,8 +275,9 @@ public class CartMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, 0f, rotation);
     }
     //
-    void LoadRoulette()
+    IEnumerator LoadRoulette(bool wait)
     {
+        if (wait) yield return new WaitForSeconds(2f);
         LoadScene.sceneToLoad = "SpinningWheel";
         fade.SetTrigger("fadeOut");
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class Player2 : MonoBehaviour
 
     public List<Image> codesList = new List<Image>();
 
-    Vector2 input;
+    public Vector2 input;
 
     int index;
     int codeIndex = 0;
@@ -28,18 +29,23 @@ public class Player2 : MonoBehaviour
     public TextMeshProUGUI result;
     public Animator fade;
 
+
+    public TutorialMinefield tutorial;
+    public Image logo;
+    Coroutine sceneCoroutine;
+
     public void OnLeftStick(InputAction.CallbackContext context)
     {
-        input = new(input.x, Mathf.RoundToInt(context.ReadValue<float>()));
+        if (!tutorial.tutorial) input = new(input.x, Mathf.RoundToInt(context.ReadValue<float>()));
     }
     //
     public void OnRightStick(InputAction.CallbackContext context)
     {
-        input = new(Mathf.RoundToInt(context.ReadValue<float>()), input.y);
+        if (!tutorial.tutorial) input = new(Mathf.RoundToInt(context.ReadValue<float>()), input.y);
     }
     public void OnAction(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !tutorial.tutorial && !logo.enabled)
         {
             for (int i = 0; i < bombCodes.Count; i++)
             {
@@ -155,39 +161,6 @@ public class Player2 : MonoBehaviour
             timer = false;
             timer_time = 1;
         }
-
-        //TESTE
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            lever1 = 1;
-            lever1Object.color = Color.blue;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            lever1 = 0;
-            lever1Object.color = Color.red;
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            lever2 = 1;
-            lever2Object.color = Color.blue;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            lever2 = 0;
-            lever2Object.color = Color.red;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            for (int i = 0; i < bombCodes.Count; i++)
-            {
-                if (lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
-                {
-                    bombAnimation(i);
-                    //bombCodes.Remove(bombCodes[i]);
-                }
-            }
-        }
     }
 
     void bombAnimation(int bombIndex)
@@ -205,14 +178,12 @@ public class Player2 : MonoBehaviour
         GameObject newPos = grid.gridPosition[player.actualPositionX][player.actualPositionY];
 
         Transform bombPos = grid.bombPosition[bombIndex];
-        print(newPos.name + "Player");
-        print(bombPos.name + "Bomb");
         if (newPos.name == bombPos.gameObject.name)
         {
             result.text = $"player 2 Venceu!";
             ScoreManager.instance.score_Player1 = 1;
             ScoreManager.instance.score_Player2 = 2;
-            LoadRoulette();
+            sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
             bombPos.gameObject.name = "Path";
         }
         else
@@ -225,8 +196,9 @@ public class Player2 : MonoBehaviour
 
     }
 
-    void LoadRoulette()
+    IEnumerator LoadRoulette(bool wait)
     {
+        if (wait) yield return new WaitForSeconds(2f);
         LoadScene.sceneToLoad = "SpinningWheel";
         fade.SetTrigger("fadeOut");
     }

@@ -18,10 +18,9 @@ public class Pump_SensorDistance : MonoBehaviour
 
         if (ok)
         {
-            if (d > 0 && d <46)
+            if (d > 0 && d < 46)
             {
                 distance = d;
-                print(distance);
             }
         }
         else

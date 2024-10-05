@@ -9,6 +9,8 @@ TagManager:
   - Objective
   - Hole
   - Target
+  - Bomb
+  - CurveCheck
   layers:
   - Default
   - TransparentFX

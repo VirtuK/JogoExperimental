@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BalloonAir : MonoBehaviour
 {
@@ -38,6 +39,9 @@ public class BalloonAir : MonoBehaviour
     public Image logo;
     public Animator balloonAnim;
     public GameObject balloonbottom, seat;
+
+    public TutorialBalloon tutorial;
+    Coroutine sceneCoroutine;
     //---------------------------------------------\\
 
     private void Start()
@@ -55,7 +59,7 @@ public class BalloonAir : MonoBehaviour
         lineRendererLeft.SetPosition(1, AnchorTopLeft.position);
         lineRendererRight.SetPosition(1, AnchorTopRight.position);
 
-        if (playing)
+        if (playing && !tutorial.tutorial)
         {
             CheckPumpInput();
             totalAirLoss = targetScript.holes.Count * airLoss * Time.deltaTime;
@@ -88,7 +92,7 @@ public class BalloonAir : MonoBehaviour
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                LoadRoulette();
+                sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
             }
 
             else if (airInside < airMin && started)
@@ -99,7 +103,7 @@ public class BalloonAir : MonoBehaviour
                 timer.StopTimer();
                 ScoreManager.instance.score_Player1 = 1;
                 ScoreManager.instance.score_Player2 = 2;
-                LoadRoulette();
+                sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
             }
 
             if (playing && timer.TimeUp())
@@ -113,7 +117,7 @@ public class BalloonAir : MonoBehaviour
                     timer.StopTimer();
                     ScoreManager.instance.score_Player1 = 2;
                     ScoreManager.instance.score_Player2 = 1;
-                    LoadRoulette();
+                    sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
                 }
                 else
                 {
@@ -122,7 +126,7 @@ public class BalloonAir : MonoBehaviour
                     timer.StopTimer();
                     ScoreManager.instance.score_Player1 = 1;
                     ScoreManager.instance.score_Player2 = 2;
-                    LoadRoulette();
+                    sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
                 }
             }
         }
@@ -136,7 +140,7 @@ public class BalloonAir : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LoadRoulette();
+            sceneCoroutine ??= StartCoroutine(LoadRoulette(false));
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -171,8 +175,9 @@ public class BalloonAir : MonoBehaviour
         airInside += pumpAir;
     }
     //
-    void LoadRoulette()
+    IEnumerator LoadRoulette(bool wait)
     {
+        if (wait) yield return new WaitForSeconds(2f);
         LoadScene.sceneToLoad = "SpinningWheel";
         fade.SetTrigger("fadeOut");
     }

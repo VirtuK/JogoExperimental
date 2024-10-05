@@ -27,7 +27,7 @@ public class Roulette : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 loadMinigame.DontGoToMinigame();
                 Spin();
