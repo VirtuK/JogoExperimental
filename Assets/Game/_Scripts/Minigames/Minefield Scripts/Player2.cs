@@ -52,7 +52,7 @@ public class Player2 : MonoBehaviour
                 if (lever1 == bombCodes[i][0] && lever2 == bombCodes[i][1])
                 {
                     bombAnimation(i);
-                    bombCodes.Remove(bombCodes[i]);
+                    //bombCodes.Remove(bombCodes[i]);
                 }
             }
         }
@@ -178,21 +178,29 @@ public class Player2 : MonoBehaviour
         GameObject newPos = grid.gridPosition[player.actualPositionX][player.actualPositionY];
 
         Transform bombPos = grid.bombPosition[bombIndex];
-        if (newPos.name == bombPos.gameObject.name)
+
+        if (bombPos.gameObject.name != "Path")
         {
-            result.text = $"player 2 Venceu!";
-            ScoreManager.instance.score_Player1 = 1;
-            ScoreManager.instance.score_Player2 = 2;
-            sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
-            bombPos.gameObject.name = "Path";
+            if (newPos.name == bombPos.gameObject.name)
+            {
+                result.text = $"player 2 Venceu!";
+                ScoreManager.instance.score_Player1 = 1;
+                ScoreManager.instance.score_Player2 = 2;
+                sceneCoroutine ??= StartCoroutine(LoadRoulette(true));
+                bombPos.gameObject.name = "Path";
+            }
+            else
+            {
+                player.canMove = true;
+                bombPos.gameObject.name = "Path";
+            }
+            grid.bombList[bombIndex].SetActive(false);
         }
         else
         {
             player.canMove = true;
-            bombPos.gameObject.name = "Path";
         }
-        grid.bombList[bombIndex].SetActive(false);
-        //grid.bombList.Remove(grid.bombList[bombIndex]);
+        
 
     }
 

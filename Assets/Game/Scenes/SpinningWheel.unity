@@ -1730,7 +1730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score_Player1: 0
   score_Player2: 0
-  minigameCount: -2
+  minigameCount: -1
+  lastMinigameIndex: 10
   player1score: 
   player2score: 
   p1: 0
@@ -2240,7 +2241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -170, y: 24.7}
+  m_AnchoredPosition: {x: -170, y: 24.700012}
   m_SizeDelta: {x: 169.61, y: 231.8}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1004635031
